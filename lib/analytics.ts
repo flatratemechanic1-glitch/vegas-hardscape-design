@@ -10,3 +10,11 @@ declare global {
 export function trackLeadSubmitted(form: "hero" | "contact_page") {
   window.gtag?.("event", "generate_lead", { form });
 }
+
+// GA4's enhanced measurement only auto-tracks outbound clicks to other
+// domains, not tel: links, so phone taps need an explicit event.
+// `location` marks which tel: link was clicked — footer (every page), the
+// homepage quick-form, or the full /contact page.
+export function trackPhoneClick(location: "footer" | "hero_form" | "contact_page") {
+  window.gtag?.("event", "phone_call_click", { location });
+}

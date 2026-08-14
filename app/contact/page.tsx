@@ -10,7 +10,6 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   CONTACT_EMAIL,
   CONTACT_PHONE_DISPLAY,
-  CONTACT_PHONE_TEL,
   HONEYPOT_FIELD_NAME,
   MAX_CONTACT_PHOTOS,
   MAX_TOTAL_PHOTO_BYTES_CLIENT,
@@ -18,6 +17,7 @@ import {
 } from "@/lib/constants";
 import { compressImageFile, PhotoCompressionError } from "@/lib/image-compression";
 import { trackLeadSubmitted } from "@/lib/analytics";
+import { TrackedPhoneLink } from "@/components/layout/tracked-phone-link";
 import { cn, formatBytes } from "@/lib/utils";
 
 const BUDGET_RANGES = [
@@ -196,13 +196,13 @@ export default function ContactPage() {
           </p>
 
           <div className="mt-10 space-y-3">
-            <a
-              href={`tel:${CONTACT_PHONE_TEL}`}
+            <TrackedPhoneLink
+              location="contact_page"
               className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-accent"
             >
               <Phone className="size-4 shrink-0" />
               {CONTACT_PHONE_DISPLAY}
-            </a>
+            </TrackedPhoneLink>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
               className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-accent"

@@ -3,12 +3,12 @@ import { Mail, MapPin, Phone, Star } from "lucide-react";
 import {
   CONTACT_EMAIL,
   CONTACT_PHONE_DISPLAY,
-  CONTACT_PHONE_TEL,
   GOOGLE_BUSINESS_PROFILE_URL,
   NAV_LINKS,
   SERVICE_AREAS,
   SITE_NAME,
 } from "@/lib/constants";
+import { TrackedPhoneLink } from "@/components/layout/tracked-phone-link";
 
 export function Footer() {
   return (
@@ -56,13 +56,13 @@ export function Footer() {
           <p className="text-xs font-medium tracking-[0.15em] text-foreground/60 uppercase">
             Contact
           </p>
-          <a
-            href={`tel:${CONTACT_PHONE_TEL}`}
+          <TrackedPhoneLink
+            location="footer"
             className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-accent"
           >
             <Phone className="size-4 shrink-0" />
             {CONTACT_PHONE_DISPLAY}
-          </a>
+          </TrackedPhoneLink>
           <a
             href={`mailto:${CONTACT_EMAIL}`}
             className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-accent"

@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, HONEYPOT_FIELD_NAME } from "@/lib/constants";
+import { CONTACT_PHONE_DISPLAY, HONEYPOT_FIELD_NAME } from "@/lib/constants";
 import { trackLeadSubmitted } from "@/lib/analytics";
+import { TrackedPhoneLink } from "@/components/layout/tracked-phone-link";
 
 export function HeroContactForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -76,9 +77,9 @@ export function HeroContactForm() {
             </h2>
             <p className="mt-1 text-xs text-muted-foreground">
               Or call{" "}
-              <a href={`tel:${CONTACT_PHONE_TEL}`} className="hover:text-accent">
+              <TrackedPhoneLink location="hero_form" className="hover:text-accent">
                 {CONTACT_PHONE_DISPLAY}
-              </a>
+              </TrackedPhoneLink>
             </p>
           </div>
 
