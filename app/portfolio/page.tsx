@@ -1,17 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { GalleryGrid, type GalleryItem } from "@/components/portfolio/gallery-grid";
 
 export const metadata: Metadata = {
   title: "Portfolio",
   description:
     "A concept-to-completion case study alongside concept renderings showcasing the design style and approach of Vegas Hardscape Design.",
-};
-
-type GalleryItem = {
-  label: string;
-  caption: string;
-  aspect: string;
-  image: string;
 };
 
 // A real, completed client project — concept renderings through construction
@@ -41,35 +34,6 @@ const GALLERY_ITEMS: GalleryItem[] = [
   { label: "Concept Rendering", caption: "Putting Green & Water Feature Layout", aspect: "aspect-[4/5]", image: "/portfolio/08-putting-green-water-feature.jpg" },
   { label: "Concept Rendering", caption: "Custom Pool Deck & Cabana — The Lakes", aspect: "aspect-[3/4]", image: "/portfolio/09-pool-deck-cabana-lakes.jpg" },
 ];
-
-function GalleryGrid({ items }: { items: GalleryItem[] }) {
-  return (
-    <div className="columns-1 gap-6 sm:columns-2 lg:columns-3">
-      {items.map((item) => (
-        <figure
-          key={item.image}
-          className="mb-6 break-inside-avoid overflow-hidden rounded-sm border border-border bg-secondary/40"
-        >
-          <div className={`relative ${item.aspect}`}>
-            <Image
-              src={item.image}
-              alt={item.caption}
-              fill
-              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-              className="object-cover"
-            />
-            <span className="absolute top-3 left-3 rounded-full bg-foreground/70 px-2.5 py-1 text-[10px] font-medium tracking-[0.15em] text-background uppercase backdrop-blur-sm">
-              {item.label}
-            </span>
-          </div>
-          <figcaption className="border-t border-border px-4 py-3 text-xs text-muted-foreground">
-            {item.caption}
-          </figcaption>
-        </figure>
-      ))}
-    </div>
-  );
-}
 
 export default function PortfolioPage() {
   return (
