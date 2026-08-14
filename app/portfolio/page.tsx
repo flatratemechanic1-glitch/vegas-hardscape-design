@@ -17,6 +17,7 @@ type GalleryItem = {
 // A real, completed client project — concept renderings through construction
 // to the finished backyard. Location kept generic at the client's request.
 const FEATURED_PROJECT_ITEMS: GalleryItem[] = [
+  { label: "Before", caption: "Original Backyard", aspect: "aspect-[3/2]", image: "/portfolio/featured-00-before.jpg" },
   { label: "Concept Rendering", caption: "Full Backyard Vision", aspect: "aspect-[3/2]", image: "/portfolio/featured-01-concept-render.jpg" },
   { label: "Concept Rendering", caption: "Layout & Dimensions", aspect: "aspect-video", image: "/portfolio/featured-02-concept-layout.jpg" },
   { label: "Design Development", caption: "Dimensioned Model", aspect: "aspect-video", image: "/portfolio/featured-03-design-development.jpg" },
