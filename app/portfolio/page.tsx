@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { GalleryGrid, type GalleryItem } from "@/components/portfolio/gallery-grid";
+import { FEATURED_TESTIMONIAL } from "@/lib/testimonials";
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -73,6 +74,51 @@ export default function PortfolioPage() {
           <div className="mt-16">
             <GalleryGrid items={FEATURED_PROJECT_ITEMS} />
           </div>
+
+          <div className="mx-auto mt-16 grid max-w-5xl gap-10 border-t border-border pt-16 sm:grid-cols-3">
+            <div>
+              <p className="text-xs font-medium tracking-[0.15em] text-accent uppercase">
+                The Challenge
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                An open backyard of grass and a covered patio — no pool, no
+                defined entertaining space, and no clear path from a wish
+                list to a buildable plan.
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-medium tracking-[0.15em] text-accent uppercase">
+                The Approach
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                Photorealistic renderings and a fully dimensioned design —
+                pool geometry, a 24-foot raised water-feature bench, and deck
+                layout — approved before contractors bid. As owner&apos;s
+                rep, we tracked the pool shell, decking, and gazebo build
+                against that plan.
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-medium tracking-[0.15em] text-accent uppercase">
+                The Result
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                A finished pool with tiled decking and inlay border, the
+                raised water-feature bench, turf lawn, and a covered gazebo —
+                built to match the renderings approved months before ground
+                was broken.
+              </p>
+            </div>
+          </div>
+
+          <blockquote className="mx-auto mt-16 max-w-2xl text-center">
+            <p className="font-heading text-xl leading-relaxed text-foreground sm:text-2xl">
+              &ldquo;{FEATURED_TESTIMONIAL.quote}&rdquo;
+            </p>
+            <footer className="mt-6 text-xs font-medium tracking-[0.15em] text-accent uppercase">
+              {FEATURED_TESTIMONIAL.author} — {FEATURED_TESTIMONIAL.detail}
+            </footer>
+          </blockquote>
         </div>
       </section>
 

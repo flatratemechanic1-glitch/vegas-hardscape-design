@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { Compass, PenTool, ShieldCheck } from "lucide-react";
 import { Hero } from "@/components/home/hero";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { SERVICES } from "@/lib/constants";
+import { FEATURED_TESTIMONIAL } from "@/lib/testimonials";
 
 const TRUST_SIGNALS = [
   {
@@ -81,6 +84,25 @@ export default function Home() {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      <section className="border-t border-border bg-secondary/40">
+        <div className="mx-auto flex max-w-3xl flex-col items-center gap-8 px-6 py-24 text-center lg:px-10">
+          <blockquote>
+            <p className="font-heading text-xl leading-relaxed text-foreground sm:text-2xl">
+              &ldquo;{FEATURED_TESTIMONIAL.quote}&rdquo;
+            </p>
+            <footer className="mt-6 text-xs font-medium tracking-[0.15em] text-accent uppercase">
+              {FEATURED_TESTIMONIAL.author} — {FEATURED_TESTIMONIAL.detail}
+            </footer>
+          </blockquote>
+          <Link
+            href="/portfolio"
+            className={cn(buttonVariants({ size: "lg" }), "h-11 px-8 text-sm tracking-wide")}
+          >
+            See the Full Project
+          </Link>
         </div>
       </section>
     </>
