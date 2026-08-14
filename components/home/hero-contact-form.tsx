@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL } from "@/lib/constants";
+import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, HONEYPOT_FIELD_NAME } from "@/lib/constants";
+import { trackLeadSubmitted } from "@/lib/analytics";
 
 export function HeroContactForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -34,6 +35,7 @@ export function HeroContactForm() {
       }
 
       setSubmitted(true);
+      trackLeadSubmitted("hero");
     } catch (err) {
       setError(
         err instanceof Error
@@ -57,6 +59,17 @@ export function HeroContactForm() {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div aria-hidden="true" className="absolute left-[-9999px] h-px w-px overflow-hidden">
+            <label htmlFor="hero-website">Website</label>
+            <input
+              id="hero-website"
+              name={HONEYPOT_FIELD_NAME}
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
+
           <div>
             <h2 className="font-heading text-xl text-foreground">
               Request a Consultation

@@ -8,6 +8,16 @@ export const SITE_DESCRIPTION =
 
 export const CONTACT_EMAIL = "reggie@vegashardscapedesign.com";
 
+// Basic shape check only, not RFC 5322 exhaustive — just enough to catch
+// malformed input before it becomes an undeliverable replyTo address.
+export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Hidden honeypot field shared by both contact forms. Real visitors never see
+// or fill this input (it's visually hidden off-screen, not display:none, since
+// some bots skip display:none fields); any submission with a value here is
+// almost certainly a bot and gets silently dropped server-side.
+export const HONEYPOT_FIELD_NAME = "website";
+
 export const CONTACT_PHONE_DISPLAY = "725-352-3305";
 export const CONTACT_PHONE_TEL = "+17253523305";
 

@@ -11,11 +11,13 @@ import {
   CONTACT_EMAIL,
   CONTACT_PHONE_DISPLAY,
   CONTACT_PHONE_TEL,
+  HONEYPOT_FIELD_NAME,
   MAX_CONTACT_PHOTOS,
   MAX_TOTAL_PHOTO_BYTES_CLIENT,
   SERVICE_AREAS,
 } from "@/lib/constants";
 import { compressImageFile, PhotoCompressionError } from "@/lib/image-compression";
+import { trackLeadSubmitted } from "@/lib/analytics";
 import { cn, formatBytes } from "@/lib/utils";
 
 const BUDGET_RANGES = [
@@ -164,6 +166,7 @@ export default function ContactPage() {
       }
 
       setSubmitted(true);
+      trackLeadSubmitted("contact_page");
     } catch (err) {
       setError(
         err instanceof Error
@@ -245,6 +248,17 @@ export default function ContactPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                <div aria-hidden="true" className="absolute left-[-9999px] h-px w-px overflow-hidden">
+                  <label htmlFor="contact-website">Website</label>
+                  <input
+                    id="contact-website"
+                    name={HONEYPOT_FIELD_NAME}
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
+
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="name">Name</Label>
