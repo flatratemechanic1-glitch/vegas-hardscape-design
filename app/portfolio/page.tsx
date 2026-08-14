@@ -19,7 +19,7 @@ type GalleryItem = {
 // as a real/built project.
 const GALLERY_ITEMS: GalleryItem[] = [
   { label: "Concept Rendering", caption: "Resort-Style Pool & Spa Layout — Summerlin", aspect: "aspect-[4/5]", image: "/portfolio/01-resort-pool-spa-summerlin.jpg" },
-  { label: "Concept Rendering", caption: "Outdoor Kitchen & Pergola Concept — The Lakes", aspect: "aspect-square", image: "/portfolio/02-outdoor-kitchen-pergola-lakes.jpg" },
+  { label: "Concept Rendering", caption: "Outdoor Kitchen & Pergola Concept — The Lakes", aspect: "aspect-square", image: "/portfolio/02-outdoor-kitchen-pergola-lakes.jpeg" },
   { label: "Concept Rendering", caption: "Negative-Edge Pool — Peccole Ranch", aspect: "aspect-[3/4]", image: "/portfolio/03-negative-edge-pool-peccole-ranch.jpg" },
   { label: "Concept Rendering", caption: "Fire Feature & Lounge Terrace — Summerlin", aspect: "aspect-square", image: "/portfolio/04-fire-feature-lounge-summerlin.jpg" },
   { label: "Concept Rendering", caption: "Desert-Modern Hardscape Courtyard", aspect: "aspect-[4/5]", image: "/portfolio/05-desert-modern-courtyard.jpg" },
