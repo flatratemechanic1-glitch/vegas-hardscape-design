@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, Star } from "lucide-react";
 import {
   CONTACT_EMAIL,
   CONTACT_PHONE_DISPLAY,
   CONTACT_PHONE_TEL,
+  GOOGLE_BUSINESS_PROFILE_URL,
   NAV_LINKS,
   SERVICE_AREAS,
   SITE_NAME,
@@ -68,6 +69,15 @@ export function Footer() {
           >
             <Mail className="size-4 shrink-0" />
             {CONTACT_EMAIL}
+          </a>
+          <a
+            href={GOOGLE_BUSINESS_PROFILE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-accent"
+          >
+            <Star className="size-4 shrink-0" />
+            Find Us on Google
           </a>
         </div>
       </div>

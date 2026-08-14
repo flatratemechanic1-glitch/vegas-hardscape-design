@@ -1,6 +1,7 @@
 import {
   CONTACT_EMAIL,
   CONTACT_PHONE_TEL,
+  GOOGLE_BUSINESS_PROFILE_URL,
   SERVICE_AREAS,
   SERVICE_ZIP_CODES,
   SITE_DESCRIPTION,
@@ -46,7 +47,7 @@ export function LocalBusinessJsonLd() {
         addressCountry: "US",
       })),
     ],
-    sameAs: ["https://maps.app.goo.gl/xrchjzeXwf1zKQjw7"] as string[],
+    sameAs: [GOOGLE_BUSINESS_PROFILE_URL] as string[],
   };
 
   return (

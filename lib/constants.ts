@@ -11,6 +11,8 @@ export const CONTACT_EMAIL = "reggie@vegashardscapedesign.com";
 export const CONTACT_PHONE_DISPLAY = "725-352-3305";
 export const CONTACT_PHONE_TEL = "+17253523305";
 
+export const GOOGLE_BUSINESS_PROFILE_URL = "https://maps.app.goo.gl/xrchjzeXwf1zKQjw7";
+
 // Short marquee shown in the hero and nav — the full list lives in SERVICE_AREAS below.
 export const SERVICE_AREA_HIGHLIGHTS = ["Summerlin", "The Lakes", "Queensridge"];
 
