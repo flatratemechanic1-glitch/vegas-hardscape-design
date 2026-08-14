@@ -1,7 +1,15 @@
 import nodemailer from "nodemailer";
-import { CONTACT_EMAIL } from "@/lib/constants";
+import {
+  ALLOWED_PHOTO_MIME_TYPES,
+  CONTACT_EMAIL,
+  MAX_CONTACT_PHOTOS,
+  MAX_PHOTO_BYTES_SERVER,
+  MAX_TOTAL_PHOTO_BYTES_SERVER,
+} from "@/lib/constants";
 
-type ContactPayload = {
+export const runtime = "nodejs";
+
+type ContactFields = {
   name: string;
   phone: string;
   email: string;
@@ -9,29 +17,71 @@ type ContactPayload = {
   message: string;
 };
 
-function isValidPayload(body: unknown): body is ContactPayload {
-  if (!body || typeof body !== "object") return false;
-  const b = body as Record<string, unknown>;
-  return (
-    typeof b.name === "string" &&
-    b.name.trim().length > 0 &&
-    typeof b.email === "string" &&
-    b.email.trim().length > 0 &&
-    typeof b.message === "string" &&
-    b.message.trim().length > 0 &&
-    typeof b.phone === "string" &&
-    typeof b.budget === "string"
-  );
+function getStringField(formData: FormData, key: string): string | null {
+  const value = formData.get(key);
+  return typeof value === "string" ? value : null;
+}
+
+function extractFields(formData: FormData): ContactFields | null {
+  const name = getStringField(formData, "name");
+  const phone = getStringField(formData, "phone");
+  const email = getStringField(formData, "email");
+  const budget = getStringField(formData, "budget");
+  const message = getStringField(formData, "message");
+
+  if (
+    !name?.trim() ||
+    !email?.trim() ||
+    !message?.trim() ||
+    phone === null ||
+    budget === null
+  ) {
+    return null;
+  }
+
+  return { name, phone, email, budget, message };
 }
 
 export async function POST(request: Request) {
-  const body = await request.json().catch(() => null);
+  const formData = await request.formData().catch(() => null);
 
-  if (!isValidPayload(body)) {
+  if (!formData) {
     return Response.json({ error: "Missing required fields." }, { status: 400 });
   }
 
-  const { name, phone, email, budget, message } = body;
+  const fields = extractFields(formData);
+  if (!fields) {
+    return Response.json({ error: "Missing required fields." }, { status: 400 });
+  }
+  const { name, phone, email, budget, message } = fields;
+
+  const photoEntries = formData
+    .getAll("photos")
+    .filter((entry): entry is File => entry instanceof File && entry.size > 0);
+
+  if (photoEntries.length > MAX_CONTACT_PHOTOS) {
+    return Response.json({ error: "Too many photos attached." }, { status: 400 });
+  }
+
+  let totalPhotoBytes = 0;
+  for (const photo of photoEntries) {
+    if (!ALLOWED_PHOTO_MIME_TYPES.includes(photo.type as (typeof ALLOWED_PHOTO_MIME_TYPES)[number])) {
+      return Response.json({ error: "Unsupported photo format." }, { status: 400 });
+    }
+    if (photo.size > MAX_PHOTO_BYTES_SERVER) {
+      return Response.json(
+        { error: "One of your photos is too large. Please remove it and try again." },
+        { status: 400 }
+      );
+    }
+    totalPhotoBytes += photo.size;
+  }
+  if (totalPhotoBytes > MAX_TOTAL_PHOTO_BYTES_SERVER) {
+    return Response.json(
+      { error: "Your photos are too large combined. Please remove one and try again." },
+      { status: 400 }
+    );
+  }
 
   const gmailUser = process.env.GMAIL_USER;
   const gmailAppPassword = process.env.GMAIL_APP_PASSWORD;
@@ -43,6 +93,14 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
+
+  const attachments = await Promise.all(
+    photoEntries.map(async (photo, index) => ({
+      filename: photo.name || `photo-${index + 1}.jpg`,
+      content: Buffer.from(await photo.arrayBuffer()),
+      contentType: photo.type || "image/jpeg",
+    }))
+  );
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -60,10 +118,12 @@ export async function POST(request: Request) {
         `Phone: ${phone || "Not provided"}`,
         `Email: ${email}`,
         `Budget: ${budget || "Not provided"}`,
+        `Photos attached: ${attachments.length}`,
         "",
         "Project description:",
         message,
       ].join("\n"),
+      attachments,
     });
   } catch (error) {
     console.error("Contact form: failed to send email.", error);

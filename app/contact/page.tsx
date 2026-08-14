@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
+import { Mail, MapPin, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -11,8 +11,12 @@ import {
   CONTACT_EMAIL,
   CONTACT_PHONE_DISPLAY,
   CONTACT_PHONE_TEL,
+  MAX_CONTACT_PHOTOS,
+  MAX_TOTAL_PHOTO_BYTES_CLIENT,
   SERVICE_AREAS,
 } from "@/lib/constants";
+import { compressImageFile, PhotoCompressionError } from "@/lib/image-compression";
+import { cn, formatBytes } from "@/lib/utils";
 
 const BUDGET_RANGES = [
   "Under $50,000",
@@ -22,29 +26,136 @@ const BUDGET_RANGES = [
   "Not sure yet",
 ];
 
+type PhotoAttachment = {
+  id: string;
+  previewUrl: string;
+  filename: string;
+  status: "compressing" | "ready" | "error";
+  blob?: Blob;
+  sizeBytes?: number;
+  errorMessage?: string;
+};
+
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [photos, setPhotos] = useState<PhotoAttachment[]>([]);
+  const [photoSelectionError, setPhotoSelectionError] = useState<string | null>(null);
+  const photosRef = useRef(photos);
+  photosRef.current = photos;
+
+  useEffect(() => {
+    return () => {
+      for (const photo of photosRef.current) {
+        URL.revokeObjectURL(photo.previewUrl);
+      }
+    };
+  }, []);
+
+  const totalPhotoBytes = photos.reduce((sum, p) => sum + (p.sizeBytes ?? 0), 0);
+  const isOverTotalLimit = totalPhotoBytes > MAX_TOTAL_PHOTO_BYTES_CLIENT;
+  const hasCompressingPhotos = photos.some((p) => p.status === "compressing");
+  const hasPhotoErrors = photos.some((p) => p.status === "error");
+
+  async function handlePhotosChange(event: ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(event.target.files ?? []);
+    event.target.value = "";
+    if (files.length === 0) return;
+
+    const remainingCapacity = MAX_CONTACT_PHOTOS - photos.length;
+    const accepted = files.slice(0, Math.max(0, remainingCapacity));
+
+    if (files.length > accepted.length) {
+      setPhotoSelectionError(`You can attach up to ${MAX_CONTACT_PHOTOS} photos.`);
+    } else {
+      setPhotoSelectionError(null);
+    }
+
+    for (const file of accepted) {
+      const id = crypto.randomUUID();
+      const tempPreviewUrl = URL.createObjectURL(file);
+      setPhotos((prev) => [
+        ...prev,
+        { id, previewUrl: tempPreviewUrl, filename: file.name, status: "compressing" },
+      ]);
+
+      try {
+        const compressed = await compressImageFile(file);
+        URL.revokeObjectURL(tempPreviewUrl);
+        const previewUrl = URL.createObjectURL(compressed.blob);
+        setPhotos((prev) =>
+          prev.map((p) =>
+            p.id === id
+              ? {
+                  ...p,
+                  previewUrl,
+                  filename: compressed.filename,
+                  status: "ready",
+                  blob: compressed.blob,
+                  sizeBytes: compressed.blob.size,
+                }
+              : p
+          )
+        );
+      } catch (err) {
+        setPhotos((prev) =>
+          prev.map((p) =>
+            p.id === id
+              ? {
+                  ...p,
+                  status: "error",
+                  errorMessage:
+                    err instanceof PhotoCompressionError
+                      ? err.message
+                      : "This photo couldn't be processed.",
+                }
+              : p
+          )
+        );
+      }
+    }
+  }
+
+  function handleRemovePhoto(id: string) {
+    setPhotos((prev) => {
+      const target = prev.find((p) => p.id === id);
+      if (target) URL.revokeObjectURL(target.previewUrl);
+      return prev.filter((p) => p.id !== id);
+    });
+    setPhotoSelectionError(null);
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
+
+    if (hasCompressingPhotos) {
+      setError("Please wait for your photos to finish processing.");
+      return;
+    }
+    if (hasPhotoErrors) {
+      setError("Remove the photo(s) that failed to process before submitting.");
+      return;
+    }
+    if (isOverTotalLimit) {
+      setError("Your photos are too large combined — remove one and try again.");
+      return;
+    }
+
     setSubmitting(true);
 
-    const form = new FormData(event.currentTarget);
+    const formData = new FormData(event.currentTarget);
+    for (const photo of photos) {
+      if (photo.status === "ready" && photo.blob) {
+        formData.append("photos", photo.blob, photo.filename);
+      }
+    }
 
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.get("name"),
-          phone: form.get("phone"),
-          email: form.get("email"),
-          budget: form.get("budget"),
-          message: form.get("message"),
-        }),
+        body: formData,
       });
 
       if (!res.ok) {
@@ -189,6 +300,74 @@ export default function ContactPage() {
                     rows={5}
                     placeholder="Tell us about your space, goals, and timeline."
                   />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="photos">Project Photos (optional)</Label>
+                  <Input
+                    id="photos"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handlePhotosChange}
+                    disabled={submitting || photos.length >= MAX_CONTACT_PHOTOS}
+                  />
+                  <p className="text-xs text-muted-foreground/80">
+                    Up to {MAX_CONTACT_PHOTOS} photos · resized automatically
+                  </p>
+
+                  {photoSelectionError && (
+                    <p className="text-sm text-destructive" role="alert">
+                      {photoSelectionError}
+                    </p>
+                  )}
+
+                  {photos.length > 0 && (
+                    <div className="flex flex-wrap gap-3 pt-1">
+                      {photos.map((photo) => (
+                        <div key={photo.id} className="flex flex-col gap-1">
+                          <div className="relative size-20">
+                            <img
+                              src={photo.previewUrl}
+                              alt={photo.filename}
+                              className={cn(
+                                "size-20 rounded-lg border border-border object-cover",
+                                photo.status === "compressing" && "animate-pulse opacity-60"
+                              )}
+                            />
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon-xs"
+                              aria-label="Remove photo"
+                              onClick={() => handleRemovePhoto(photo.id)}
+                              className="absolute -top-2 -right-2 rounded-full border border-border bg-background"
+                            >
+                              <X />
+                            </Button>
+                          </div>
+                          {photo.status === "error" && (
+                            <p className="max-w-20 text-[10px] text-destructive">
+                              {photo.errorMessage}
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {photos.length > 0 && (
+                    <p
+                      className={cn(
+                        "text-xs",
+                        isOverTotalLimit ? "text-destructive" : "text-muted-foreground/80"
+                      )}
+                    >
+                      {photos.length}/{MAX_CONTACT_PHOTOS} photos · {formatBytes(totalPhotoBytes)}
+                      {isOverTotalLimit &&
+                        ` — combined size exceeds ${formatBytes(MAX_TOTAL_PHOTO_BYTES_CLIENT)}, remove a photo.`}
+                    </p>
+                  )}
                 </div>
 
                 {error && (

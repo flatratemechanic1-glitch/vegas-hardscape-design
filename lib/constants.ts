@@ -59,6 +59,23 @@ export type Service = {
   description: string;
 };
 
+// Contact form photo uploads — kept in one place so the client-side compression
+// targets and the server-side defense-in-depth checks can't drift out of sync.
+// Vercel serverless Functions enforce a hard ~4.5MB request body limit no matter
+// what Next.js-level config says, so these numbers leave real headroom under that.
+export const MAX_CONTACT_PHOTOS = 4;
+export const MAX_PHOTO_DIMENSION = 1600;
+export const PHOTO_JPEG_QUALITY_STEPS = [0.75, 0.6, 0.45] as const;
+export const MAX_PHOTO_BYTES_CLIENT = 1.2 * 1024 * 1024;
+export const MAX_TOTAL_PHOTO_BYTES_CLIENT = 3 * 1024 * 1024;
+export const MAX_PHOTO_BYTES_SERVER = 2 * 1024 * 1024;
+export const MAX_TOTAL_PHOTO_BYTES_SERVER = 4 * 1024 * 1024;
+export const ALLOWED_PHOTO_MIME_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+] as const;
+
 export const SERVICES: Service[] = [
   {
     slug: "hardscape-pool-design",
