@@ -93,9 +93,12 @@ export default function PortfolioPage() {
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                 Photorealistic renderings and a fully dimensioned design —
                 pool geometry, a 24-foot raised water-feature bench, and deck
-                layout — approved before contractors bid. As owner&apos;s
-                rep, we tracked the pool shell, decking, and gazebo build
-                against that plan.
+                layout — approved before contractors bid. Precise material
+                take-offs meant accurate quantities and costs going into
+                every bid, little wasted material, and a clear baseline to
+                check contractor pricing against. As owner&apos;s rep, we
+                tracked the pool shell, decking, and gazebo build against
+                that plan.
               </p>
             </div>
             <div>

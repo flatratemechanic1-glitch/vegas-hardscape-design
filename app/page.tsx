@@ -15,7 +15,7 @@ const TRUST_SIGNALS = [
   {
     title: "Independent Advocate",
     description:
-      "We are never paid by the contractors we oversee, so our recommendations serve only your project and your budget.",
+      "We are never paid by the contractors we oversee, and our precise material take-offs give you an accurate cost baseline — so you know when a bid is fair, not inflated.",
   },
   {
     title: "See It Before You Build It",

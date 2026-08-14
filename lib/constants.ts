@@ -95,7 +95,7 @@ export const SERVICES: Service[] = [
     summary:
       "Precision-drafted layouts for pools, patios, and outdoor living spaces, tailored to your lot, view corridors, and how you actually live outdoors.",
     description:
-      "We translate your site's grade, orientation, and HOA constraints into a fully dimensioned design — hardscape materials, pool and spa geometry, shade structures, and landscape zones — before a single bid goes out. Every plan is built to hand directly to your licensed contractors for accurate, apples-to-apples pricing.",
+      "We translate your site's grade, orientation, and HOA constraints into a fully dimensioned design — hardscape materials, pool and spa geometry, shade structures, and landscape zones — before a single bid goes out. Every plan includes precise material quantities and costs, so you can hand it directly to your licensed contractors for accurate, apples-to-apples pricing and know when a bid is out of line.",
   },
   {
     slug: "3d-renderings",

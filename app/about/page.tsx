@@ -52,12 +52,14 @@ export default function AboutPage() {
             </p>
             <p>
               As your owner&apos;s representative, that same background lets
-              Reggie read contractor bids and specifications closely, catch
-              inconsistencies before they become change orders, and advocate
-              for your design intent from the first shovel to the final
-              walkthrough — all without ever performing the physical work
-              himself. Construction is always carried out by your own
-              licensed, insured Nevada contractors.
+              Reggie read contractor bids and specifications closely, verify
+              material quantities and costs against the design, and catch
+              inconsistencies before they become change orders — so you know
+              a bid reflects the actual project, not inflated pricing.
+              He advocates for your design intent from the first shovel to
+              the final walkthrough — all without ever performing the
+              physical work himself. Construction is always carried out by
+              your own licensed, insured Nevada contractors.
             </p>
           </div>
 
