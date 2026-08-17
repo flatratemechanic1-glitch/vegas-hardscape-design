@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
-import { Mail, MapPin, Phone, X } from "lucide-react";
+import { Mail, MapPin, Phone, Star, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   CONTACT_EMAIL,
   CONTACT_PHONE_DISPLAY,
+  GOOGLE_BUSINESS_PROFILE_URL,
   HONEYPOT_FIELD_NAME,
   MAX_CONTACT_PHOTOS,
   MAX_TOTAL_PHOTO_BYTES_CLIENT,
@@ -209,6 +210,15 @@ export default function ContactPage() {
             >
               <Mail className="size-4 shrink-0" />
               {CONTACT_EMAIL}
+            </a>
+            <a
+              href={GOOGLE_BUSINESS_PROFILE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-accent"
+            >
+              <Star className="size-4 shrink-0" />
+              Read Our Google Review
             </a>
           </div>
 

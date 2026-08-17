@@ -3,7 +3,7 @@ import { Compass, PenTool, ShieldCheck } from "lucide-react";
 import { Hero } from "@/components/home/hero";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { SERVICES } from "@/lib/constants";
+import { GOOGLE_BUSINESS_PROFILE_URL, SERVICES } from "@/lib/constants";
 import { FEATURED_TESTIMONIAL } from "@/lib/testimonials";
 
 const TRUST_SIGNALS = [
@@ -26,6 +26,10 @@ const TRUST_SIGNALS = [
 
 const SERVICE_ICONS = [PenTool, Compass, ShieldCheck];
 
+// Same three icons as SERVICE_ICONS, reordered to match TRUST_SIGNALS —
+// deliberately echoes the services section's visual language.
+const TRUST_ICONS = [PenTool, ShieldCheck, Compass];
+
 export default function Home() {
   return (
     <>
@@ -33,19 +37,23 @@ export default function Home() {
 
       <section className="border-b border-border">
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 sm:grid-cols-3 lg:px-10">
-          {TRUST_SIGNALS.map((signal) => (
-            <div
-              key={signal.title}
-              className="border-t border-accent/40 pt-6"
-            >
-              <h3 className="font-heading text-lg text-foreground">
-                {signal.title}
-              </h3>
-              <p className="mt-3 text-sm text-muted-foreground">
-                {signal.description}
-              </p>
-            </div>
-          ))}
+          {TRUST_SIGNALS.map((signal, i) => {
+            const Icon = TRUST_ICONS[i];
+            return (
+              <div
+                key={signal.title}
+                className="border-t border-accent/40 pt-6"
+              >
+                <Icon className="size-6 text-accent" strokeWidth={1.5} />
+                <h3 className="mt-4 font-heading text-lg text-foreground">
+                  {signal.title}
+                </h3>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  {signal.description}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -104,6 +112,16 @@ export default function Home() {
           >
             See the Full Project
           </Link>
+          {/* Exactly one real Google review exists as of writing — keep this
+              singular. Only pluralize once a second review is confirmed live. */}
+          <a
+            href={GOOGLE_BUSINESS_PROFILE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs font-medium tracking-[0.15em] text-muted-foreground uppercase hover:text-accent hover:underline"
+          >
+            Read Our Google Review
+          </a>
         </div>
       </section>
     </>
