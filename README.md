@@ -28,3 +28,14 @@ Until those are set, form submissions fail with a clear "email is not configured
 2. Import it in Vercel and connect the `vegashardscapedesign.com` domain.
 3. Add the `GMAIL_USER` / `GMAIL_APP_PASSWORD` / `CONTACT_TO_EMAIL` environment variables (see above).
 4. Verify `/sitemap.xml` and `/robots.txt` resolve on the live domain, then submit the sitemap in Google Search Console.
+
+### How it actually redeploys day-to-day
+
+Every `git push` to `main` on `github.com/flatratemechanic1-glitch/vegas-hardscape-design` auto-deploys via Vercel's GitHub integration — no manual "deploy" step needed. Confirm this current commit made it live with:
+
+```bash
+git log --oneline -1
+curl -s https://vegashardscapedesign.com/ | grep -o 'some-unique-string-from-your-latest-change'
+```
+
+**If a push doesn't show up on the live site**, the most likely cause is Vercel's GitHub App losing its connection to the repo — this can happen after a GitHub account/ownership change. Check Vercel Dashboard → Project → Settings → Git: if it shows disconnected or points at the wrong repo, reconnect it there (pick `flatratemechanic1-glitch/vegas-hardscape-design` again). As a stopgap while that's broken, you can still trigger a deploy manually from Vercel Dashboard → Deployments → "Redeploy" on the latest commit.
