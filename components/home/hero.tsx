@@ -12,7 +12,10 @@ export function Hero() {
         src="/hero.jpg"
         alt="Photorealistic rendering of a luxury Las Vegas desert-modern backyard with an infinity pool and mountain views"
         fill
-        priority
+        preload
+        fetchPriority="high"
+        quality={65}
+        sizes="100vw"
         className="object-cover opacity-90"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/70 to-foreground/30" />
