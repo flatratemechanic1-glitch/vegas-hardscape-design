@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Mail, MapPin, Phone, Star } from "lucide-react";
 import {
@@ -15,7 +16,16 @@ export function Footer() {
     <footer className="border-t border-border bg-secondary/40">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4 lg:px-10">
         <div className="space-y-3">
-          <p className="font-heading text-lg text-foreground">{SITE_NAME}</p>
+          <p className="flex items-center gap-2.5 font-heading text-lg text-foreground">
+            <Image
+              src="/brand/logo-mark.png"
+              alt=""
+              width={28}
+              height={28}
+              className="size-7"
+            />
+            {SITE_NAME}
+          </p>
           <p className="max-w-xs text-sm text-muted-foreground">
             Design, photorealistic rendering, and owner&apos;s representative
             consulting for luxury outdoor projects across Las Vegas.

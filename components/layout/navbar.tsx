@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -17,9 +18,17 @@ export function Navbar() {
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-10">
         <Link
           href="/"
-          className="font-heading text-lg tracking-wide text-foreground"
+          className="flex items-center gap-2.5 font-heading text-lg tracking-wide text-foreground"
           onClick={() => setOpen(false)}
         >
+          <Image
+            src="/brand/logo-mark.png"
+            alt=""
+            width={32}
+            height={32}
+            className="size-8"
+            priority
+          />
           {SITE_NAME}
         </Link>
 
