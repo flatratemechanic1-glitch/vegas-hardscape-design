@@ -12,6 +12,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools/turf-calculator",
     "/tools/retaining-wall-calculator",
     "/tools/concrete-calculator",
+    "/tools/pool-volume-calculator",
+    "/tools/pool-chlorine-calculator",
     "/about",
     "/contact",
   ];

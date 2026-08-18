@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BrickWall, Calculator, Sprout, Square } from "lucide-react";
+import { BrickWall, Calculator, Droplet, FlaskConical, Sprout, Square } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -46,6 +46,20 @@ const TOOLS = [
     description:
       "Estimate cubic yards of ready-mix, bag count, and a rebar grid for a slab, patio, or footing.",
     icon: Square,
+  },
+  {
+    href: "/tools/pool-volume-calculator",
+    title: "Pool Volume Calculator",
+    description:
+      "Estimate your pool's gallons, cubic feet, and fill time from its shape and dimensions.",
+    icon: Droplet,
+  },
+  {
+    href: "/tools/pool-chlorine-calculator",
+    title: "Pool Chlorine Calculator",
+    description:
+      "Estimate how much liquid chlorine your pool needs to reach a target free chlorine level.",
+    icon: FlaskConical,
   },
 ];
 

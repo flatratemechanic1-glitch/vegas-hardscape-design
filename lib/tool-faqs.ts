@@ -111,3 +111,59 @@ export const CONCRETE_CALCULATOR_FAQS: Faq[] = [
       "It's a solid planning estimate for budgeting, not a final order — actual yardage should always be confirmed with your ready-mix supplier, who will also account for slab thickness variation and site access. Our design process includes precise take-offs for any concrete work tied to a project we design.",
   },
 ];
+
+export const POOL_VOLUME_CALCULATOR_FAQS: Faq[] = [
+  {
+    question: "How do I calculate my pool's volume in gallons?",
+    answer:
+      "Multiply length x width x average depth (in feet), then multiply by 7.48 — the number of gallons in a cubic foot of water. For round or oval pools, the calculation uses the actual circle or ellipse area instead of a simple rectangle.",
+  },
+  {
+    question: "What if my pool is a kidney or freeform shape?",
+    answer:
+      "There's no exact formula for an irregular shape, so this calculator applies a rough approximation based on the pool's bounding length and width. For an exact number, check your builder's original plans or have your pool professional measure it directly.",
+  },
+  {
+    question: "How does average depth work for a sloped pool?",
+    answer:
+      "Average depth is simply (shallow end depth + deep end depth) / 2, which works well for a pool with one even, consistent slope. Pools with a distinct hopper or deep-end drop-off will run slightly higher in actual volume than this estimate.",
+  },
+  {
+    question: "Why does knowing my pool's volume matter?",
+    answer:
+      "Gallon count is the baseline for nearly everything else in pool ownership — chemical dosing, heater sizing, and estimating fill time or water cost. Once you have your volume here, you can carry it straight into our Pool Chlorine Calculator.",
+  },
+  {
+    question: "Is this calculator accurate enough for chemical dosing?",
+    answer:
+      "It's a solid planning estimate, not an exact number. For precise chemical dosing, it's worth confirming your volume against your builder's plans or a professional measurement, since even a 10% difference in gallons changes dosing amounts meaningfully.",
+  },
+];
+
+export const POOL_CHLORINE_CALCULATOR_FAQS: Faq[] = [
+  {
+    question: "How much chlorine do I need to raise my pool's chlorine level?",
+    answer:
+      "The amount depends on your pool's volume and how many parts per million (ppm) you need to raise free chlorine by. This calculator estimates the fl oz of 12.5% liquid chlorine needed — a common retail strength — to close that gap.",
+  },
+  {
+    question: "What's the difference between liquid chlorine, cal-hypo, and dichlor shock?",
+    answer:
+      "They're different concentrations and forms of the same active ingredient, so they require different amounts to raise chlorine by the same ppm — liquid chlorine (10-12.5%) needs the most by volume, while granular cal-hypo or dichlor shock (55-73%) needs far less by weight. Always follow your specific product's label, since this calculator assumes liquid chlorine.",
+  },
+  {
+    question: "How often should I test and add chlorine?",
+    answer:
+      "Most residential pools should be tested at least 2-3 times per week in swim season, more often in our summer heat since chlorine burns off faster in high heat and direct sun. Keeping free chlorine in the 1-3 ppm range (or per your stabilizer level) is the general target for most chlorine pools.",
+  },
+  {
+    question: "Is it safe to swim right after adding chlorine?",
+    answer:
+      "Wait until free chlorine drops back into a normal swimming range — generally under about 5 ppm — before getting in, which is especially important after a shock treatment. Always follow your product label's specific re-entry guidance.",
+  },
+  {
+    question: "Is this calculator accurate enough to dose my pool from directly?",
+    answer:
+      "Treat it as a starting-point estimate, not a precise dose — actual chlorine demand depends on your product's exact concentration, stabilizer (CYA) level, temperature, and sunlight exposure. Add chemicals gradually, retest before swimming, and always follow your product's label instructions.",
+  },
+];
