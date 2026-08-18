@@ -167,3 +167,59 @@ export const POOL_CHLORINE_CALCULATOR_FAQS: Faq[] = [
       "Treat it as a starting-point estimate, not a precise dose — actual chlorine demand depends on your product's exact concentration, stabilizer (CYA) level, temperature, and sunlight exposure. Add chemicals gradually, retest before swimming, and always follow your product's label instructions.",
   },
 ];
+
+export const GRAVEL_CALCULATOR_FAQS: Faq[] = [
+  {
+    question: "How much gravel do I need for my project?",
+    answer:
+      "Multiply length x width x depth (converted to feet) to get cubic feet, divide by 27 for cubic yards, then multiply by your material's density to get tons. Most gravel and crushed stone runs about 1.3-1.5 tons per cubic yard depending on the specific material.",
+  },
+  {
+    question: "How deep should a gravel path or ground cover layer be?",
+    answer:
+      "2-3 in. is typical for a decorative ground cover layer over landscape fabric. Paths and drainage areas often go 3-4 in., and areas under a structural base (like a paver base course) are a separate, deeper calculation — see our Paver Patio Calculator for that.",
+  },
+  {
+    question: "Should I order gravel by the ton or by the bag?",
+    answer:
+      "Bags make sense for small areas — under about half a ton. Anything larger is far more cost-effective delivered in bulk by the ton or cubic yard from a landscape supply yard rather than bought bag by bag.",
+  },
+  {
+    question: "Why is decorative rock more common than mulch in Las Vegas?",
+    answer:
+      "Rock doesn't break down, blow away, or need replacing the way organic mulch does, and it doesn't hold moisture against a home's foundation the way mulch can — all practical advantages in our heat and low-rainfall climate. Mulch still has a place around trees and shrubs where moisture retention actually helps.",
+  },
+  {
+    question: "Is this calculator accurate enough to order gravel from?",
+    answer:
+      "It's a solid planning estimate for budgeting, not a final material order — actual yardage should be confirmed with your supplier, especially for irregular areas or unusual depths. Our design process includes precise material take-offs for any project we design.",
+  },
+];
+
+export const MULCH_CALCULATOR_FAQS: Faq[] = [
+  {
+    question: "How much mulch do I need for my beds?",
+    answer:
+      "Multiply length x width x depth (converted to feet) to get cubic feet, then divide by 27 for cubic yards — or divide cubic feet by 2 to estimate standard 2 cu ft retail bags, the most common bag size sold at garden centers.",
+  },
+  {
+    question: "How deep should a mulch layer be?",
+    answer:
+      "2-3 in. is the standard depth for most planting beds — enough to suppress weeds and retain moisture without smothering roots. Avoid piling mulch directly against tree trunks or plant stems regardless of depth.",
+  },
+  {
+    question: "Is it cheaper to buy mulch in bags or bulk?",
+    answer:
+      "Bags are convenient for small beds, but bulk delivery by the cubic yard is almost always cheaper per unit for anything beyond a few beds — as a rough rule of thumb, once you need more than about 10-15 bags, bulk is usually worth pricing out.",
+  },
+  {
+    question: "Does mulch make sense in a Las Vegas landscape?",
+    answer:
+      "Yes, in the right spots — mulch helps retain moisture and moderate soil temperature around trees, shrubs, and planting beds, which matters in our heat even in an otherwise rock-and-turf-heavy desert landscape. It's just less commonly used as a large-area ground cover here than decorative rock.",
+  },
+  {
+    question: "Is this calculator accurate enough to order mulch from?",
+    answer:
+      "It's a solid planning estimate for budgeting, not a final material order — actual coverage varies by bed shape and how settled or loose the mulch is. Our design process includes precise material take-offs for any project we design.",
+  },
+];

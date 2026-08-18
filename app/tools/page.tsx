@@ -1,6 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BrickWall, Calculator, Droplet, FlaskConical, Sprout, Square } from "lucide-react";
+import {
+  BrickWall,
+  Calculator,
+  Droplet,
+  FlaskConical,
+  Leaf,
+  Mountain,
+  Sprout,
+  Square,
+} from "lucide-react";
 import {
   Card,
   CardContent,
@@ -61,6 +70,20 @@ const TOOLS = [
       "Estimate how much liquid chlorine your pool needs to reach a target free chlorine level.",
     icon: FlaskConical,
   },
+  {
+    href: "/tools/gravel-calculator",
+    title: "Gravel Calculator",
+    description:
+      "Estimate cubic yards, tons, and bag count of gravel or decorative rock for a path or ground cover.",
+    icon: Mountain,
+  },
+  {
+    href: "/tools/mulch-calculator",
+    title: "Mulch Calculator",
+    description:
+      "Estimate cubic yards and bag count of mulch for your planting beds.",
+    icon: Leaf,
+  },
 ];
 
 export default function ToolsPage() {
@@ -81,8 +104,8 @@ export default function ToolsPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-5xl px-6 py-24 lg:px-10">
-        <div className="grid gap-6 sm:grid-cols-2">
+      <section className="mx-auto max-w-6xl px-6 py-24 lg:px-10">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {TOOLS.map((tool) => {
             const Icon = tool.icon;
             return (
