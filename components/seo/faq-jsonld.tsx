@@ -1,10 +1,10 @@
-import { FAQS } from "@/lib/faqs";
+import { FAQS, type Faq } from "@/lib/faqs";
 
-export function FaqJsonLd() {
+export function FaqJsonLd({ faqs = FAQS }: { faqs?: Faq[] }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: FAQS.map((faq) => ({
+    mainEntity: faqs.map((faq) => ({
       "@type": "Question",
       name: faq.question,
       acceptedAnswer: {

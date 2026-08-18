@@ -3,7 +3,15 @@ import { SERVICE_AREAS } from "@/lib/constants";
 import { SITE_URL } from "@/lib/site-config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/services", "/portfolio", "/about", "/contact"];
+  const staticRoutes = [
+    "",
+    "/services",
+    "/portfolio",
+    "/tools",
+    "/tools/paver-calculator",
+    "/about",
+    "/contact",
+  ];
   const areaRoutes = SERVICE_AREAS.map((area) => `/service-areas/${area.slug}`);
   const routes = [...staticRoutes, ...areaRoutes];
 

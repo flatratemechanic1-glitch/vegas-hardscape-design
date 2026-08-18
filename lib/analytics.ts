@@ -18,3 +18,11 @@ export function trackLeadSubmitted(form: "hero" | "contact_page") {
 export function trackPhoneClick(location: "footer" | "hero_form" | "contact_page") {
   window.gtag?.("event", "phone_call_click", { location });
 }
+
+// Measures engagement with free interactive tools (e.g. the paver
+// calculator) so their traffic/SEO value can be judged by actual usage,
+// not just pageviews. `tool` names the calculator; fires once per session
+// of meaningful use (valid dimensions entered), not on every keystroke.
+export function trackToolUsed(tool: string) {
+  window.gtag?.("event", "tool_used", { tool });
+}
