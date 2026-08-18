@@ -223,3 +223,36 @@ export const MULCH_CALCULATOR_FAQS: Faq[] = [
       "It's a solid planning estimate for budgeting, not a final material order — actual coverage varies by bed shape and how settled or loose the mulch is. Our design process includes precise material take-offs for any project we design.",
   },
 ];
+
+export const FIRE_PIT_CALCULATOR_FAQS: Faq[] = [
+  {
+    question: "How many blocks do I need for a fire pit?",
+    answer:
+      "Divide the circumference of your fire pit ring (roughly pi x interior diameter) by the width of one block to get blocks per course, then multiply by how many courses tall you're building. A 4 ft diameter pit with 12 in. blocks needs about 13 blocks per course.",
+  },
+  {
+    question: "How tall should a fire pit wall be?",
+    answer:
+      "12-14 in. is a common finished height — tall enough to contain the fire safely, low enough to still work as informal seating or a place to rest a drink. That usually works out to 2-3 courses of standard 4-6 in. wall block.",
+  },
+  {
+    question: "What size fire pit is comfortable to sit around?",
+    answer:
+      "36-44 in. interior diameter is the typical comfortable range for a seating area built around it — small enough to radiate heat to everyone seated, large enough that seating isn't uncomfortably close to the flame.",
+  },
+  {
+    question: "Do I need a liner or base inside a fire pit?",
+    answer:
+      "A steel fire ring liner is strongly recommended to protect the block wall from direct heat damage and cracking over time. A gravel or sand base under the liner also helps with drainage and heat protection for the ground beneath.",
+  },
+  {
+    question: "Does Las Vegas have rules about fire pits?",
+    answer:
+      "Wood-burning fire features are restricted in parts of the Las Vegas Valley for air quality reasons, and many HOAs require gas rather than wood-burning fire pits. Always confirm your HOA's rules and any county or city burn restrictions before building a wood-burning fire pit.",
+  },
+  {
+    question: "Is this calculator accurate enough to order blocks from?",
+    answer:
+      "It's a solid planning estimate for budgeting, not a final material order — actual block count depends on the specific curved or straight block product you choose, since some are designed specifically for circular construction. Our design process includes an exact take-off for any fire feature tied to a project we design.",
+  },
+];

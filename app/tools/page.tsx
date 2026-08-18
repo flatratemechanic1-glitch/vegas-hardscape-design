@@ -4,6 +4,7 @@ import {
   BrickWall,
   Calculator,
   Droplet,
+  Flame,
   FlaskConical,
   Leaf,
   Mountain,
@@ -83,6 +84,13 @@ const TOOLS = [
     description:
       "Estimate cubic yards and bag count of mulch for your planting beds.",
     icon: Leaf,
+  },
+  {
+    href: "/tools/fire-pit-calculator",
+    title: "Fire Pit Calculator",
+    description:
+      "Estimate block count and base fill for a round fire pit from its diameter and block size.",
+    icon: Flame,
   },
 ];
 

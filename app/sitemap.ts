@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools/pool-chlorine-calculator",
     "/tools/gravel-calculator",
     "/tools/mulch-calculator",
+    "/tools/fire-pit-calculator",
     "/about",
     "/contact",
   ];
