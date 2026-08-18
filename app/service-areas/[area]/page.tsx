@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Compass, PenTool, ShieldCheck } from "lucide-react";
+import { Calculator, Compass, PenTool, ShieldCheck } from "lucide-react";
 import { GalleryGrid } from "@/components/portfolio/gallery-grid";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -64,6 +64,18 @@ export default async function ServiceAreaPage(
             — without ever picking up a shovel.
           </p>
         </div>
+      </section>
+
+      <section className="border-b border-border bg-secondary/30">
+        <Link
+          href="/tools"
+          className="mx-auto flex max-w-4xl items-center justify-center gap-3 px-6 py-4 text-center text-sm text-foreground/80 transition-colors hover:text-accent lg:px-10"
+        >
+          <Calculator className="size-4 shrink-0 text-accent" strokeWidth={1.5} />
+          Planning your {area.name} project? Try our free paver &amp; turf
+          calculators
+          <span aria-hidden="true">&rarr;</span>
+        </Link>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-24 lg:px-10">

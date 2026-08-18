@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/portfolio",
     "/tools",
     "/tools/paver-calculator",
+    "/tools/turf-calculator",
     "/about",
     "/contact",
   ];

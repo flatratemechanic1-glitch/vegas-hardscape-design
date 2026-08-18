@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Calculator } from "lucide-react";
+import { Calculator, Sprout } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -25,6 +25,13 @@ const TOOLS = [
     description:
       "Estimate paver count, base gravel, and bedding sand for a patio, walkway, or driveway.",
     icon: Calculator,
+  },
+  {
+    href: "/tools/turf-calculator",
+    title: "Artificial Turf Calculator",
+    description:
+      "Estimate turf, infill, and seaming materials for a grass-to-turf conversion, plus water savings.",
+    icon: Sprout,
   },
 ];
 
