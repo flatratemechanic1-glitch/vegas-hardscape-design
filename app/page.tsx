@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Compass, PenTool, ShieldCheck } from "lucide-react";
 import { Hero } from "@/components/home/hero";
@@ -5,6 +6,18 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { GOOGLE_BUSINESS_PROFILE_URL, SERVICES } from "@/lib/constants";
 import { FEATURED_TESTIMONIAL } from "@/lib/testimonials";
+
+// Overrides the root layout's long, tagline-based title/description with a
+// shorter pair tailored for search snippets. The root's versions remain in
+// use as the OpenGraph/Twitter title and as the <title> template default for
+// any page that doesn't set its own metadata.
+export const metadata: Metadata = {
+  title: {
+    absolute: "Las Vegas Hardscape & Pool Design | Vegas Hardscape Design",
+  },
+  description:
+    "Custom hardscape and pool design, photorealistic 3D renderings, and owner's rep consulting for luxury homes in Las Vegas and Summerlin.",
+};
 
 const TRUST_SIGNALS = [
   {

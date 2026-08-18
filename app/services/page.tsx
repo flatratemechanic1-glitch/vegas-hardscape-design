@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Services",
   description:
     "Custom hardscape and pool layout design, 3D SketchUp renderings, and owner's representative project consulting in Las Vegas.",
+  alternates: {
+    canonical: "/services",
+  },
 };
 
 const SERVICE_ICONS = [PenTool, Compass, ShieldCheck];

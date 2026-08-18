@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "Meet Reggie, founder and lead designer of Vegas Hardscape Design — decades of artistic and structural expertise translated into precision outdoor design.",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export default function AboutPage() {

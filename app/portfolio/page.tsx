@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Portfolio",
   description:
     "A concept-to-completion case study alongside concept renderings showcasing the design style and approach of Vegas Hardscape Design.",
+  alternates: {
+    canonical: "/portfolio",
+  },
 };
 
 // A real, completed client project — concept renderings through construction
