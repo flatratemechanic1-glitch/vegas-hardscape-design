@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Calculator, Sprout } from "lucide-react";
+import { BrickWall, Calculator, Sprout, Square } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -32,6 +32,20 @@ const TOOLS = [
     description:
       "Estimate turf, infill, and seaming materials for a grass-to-turf conversion, plus water savings.",
     icon: Sprout,
+  },
+  {
+    href: "/tools/retaining-wall-calculator",
+    title: "Retaining Wall Calculator",
+    description:
+      "Estimate block count, base material, and drainage backfill for a garden or grading retaining wall.",
+    icon: BrickWall,
+  },
+  {
+    href: "/tools/concrete-calculator",
+    title: "Concrete Calculator",
+    description:
+      "Estimate cubic yards of ready-mix, bag count, and a rebar grid for a slab, patio, or footing.",
+    icon: Square,
   },
 ];
 

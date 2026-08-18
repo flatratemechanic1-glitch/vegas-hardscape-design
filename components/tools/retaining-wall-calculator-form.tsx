@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { Layers, LayoutGrid, Package, Ruler } from "lucide-react";
+import { BrickWall, Layers, LayoutGrid, Ruler } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -16,95 +16,86 @@ import { cn } from "@/lib/utils";
 import { trackToolUsed } from "@/lib/analytics";
 import { ceilSafe, formatNumber } from "@/lib/calculator-utils";
 
-const PAVER_SIZES = [
-  { key: "6x9", label: '6" x 9"', widthIn: 6, lengthIn: 9 },
-  { key: "6x6", label: '6" x 6"', widthIn: 6, lengthIn: 6 },
-  { key: "12x12", label: '12" x 12"', widthIn: 12, lengthIn: 12 },
-  { key: "16x16", label: '16" x 16"', widthIn: 16, lengthIn: 16 },
-  { key: "24x24", label: '24" x 24"', widthIn: 24, lengthIn: 24 },
-  { key: "custom", label: "Custom size", widthIn: 0, lengthIn: 0 },
+const BLOCK_SIZES = [
+  { key: "small", label: 'Small (12" x 4")', widthIn: 12, heightIn: 4 },
+  { key: "medium", label: 'Medium (16" x 6")', widthIn: 16, heightIn: 6 },
+  { key: "large", label: 'Large (18" x 8")', widthIn: 18, heightIn: 8 },
+  { key: "custom", label: "Custom size", widthIn: 0, heightIn: 0 },
 ] as const;
 
-// Standard densities for compacted materials — close enough for planning
-// purposes; exact yields vary by supplier and moisture content.
+// Standard density for compacted base/drainage stone — close enough for
+// planning purposes; exact yields vary by supplier and moisture content.
 const BASE_TONS_PER_CUBIC_YARD = 1.4;
-const SAND_TONS_PER_CUBIC_YARD = 1.35;
-// Rule-of-thumb coverage for a 50 lb bag of polymeric joint sand at a
-// typical 1/8-3/16 in. joint width.
-const SQ_FT_PER_JOINT_SAND_BAG = 80;
 
 const selectClassName = cn(
   "h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none",
   "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 md:text-sm dark:bg-input/30"
 );
 
-export function PaverCalculatorForm() {
+export function RetainingWallCalculatorForm() {
   const [length, setLength] = useState("20");
-  const [width, setWidth] = useState("15");
-  const [paverSizeKey, setPaverSizeKey] =
-    useState<(typeof PAVER_SIZES)[number]["key"]>("12x12");
+  const [height, setHeight] = useState("3");
+  const [blockSizeKey, setBlockSizeKey] =
+    useState<(typeof BLOCK_SIZES)[number]["key"]>("small");
   const [customWidthIn, setCustomWidthIn] = useState("12");
-  const [customLengthIn, setCustomLengthIn] = useState("12");
+  const [customHeightIn, setCustomHeightIn] = useState("4");
   const [wasteFactor, setWasteFactor] = useState("10");
-  const [baseDepthIn, setBaseDepthIn] = useState("4");
-  const [sandDepthIn, setSandDepthIn] = useState("1");
+  const [baseDepthIn, setBaseDepthIn] = useState("6");
+  const [backfillWidthIn, setBackfillWidthIn] = useState("12");
 
   const hasTracked = useRef(false);
 
   const results = useMemo(() => {
     const lengthFt = parseFloat(length) || 0;
-    const widthFt = parseFloat(width) || 0;
-    const areaSqFt = lengthFt * widthFt;
+    const heightFt = parseFloat(height) || 0;
+    const wallAreaSqFt = lengthFt * heightFt;
 
-    const selectedSize = PAVER_SIZES.find((size) => size.key === paverSizeKey);
-    const paverWidthIn =
-      paverSizeKey === "custom" ? parseFloat(customWidthIn) || 0 : selectedSize?.widthIn ?? 0;
-    const paverLengthIn =
-      paverSizeKey === "custom" ? parseFloat(customLengthIn) || 0 : selectedSize?.lengthIn ?? 0;
-    const paverAreaSqFt = (paverWidthIn * paverLengthIn) / 144;
+    const selectedBlock = BLOCK_SIZES.find((b) => b.key === blockSizeKey);
+    const blockWidthIn =
+      blockSizeKey === "custom" ? parseFloat(customWidthIn) || 0 : selectedBlock?.widthIn ?? 0;
+    const blockHeightIn =
+      blockSizeKey === "custom" ? parseFloat(customHeightIn) || 0 : selectedBlock?.heightIn ?? 0;
+    const blockFaceAreaSqFt = (blockWidthIn * blockHeightIn) / 144;
 
     const wasteFactorNum = Math.max(parseFloat(wasteFactor) || 0, 0);
-    const paverCount =
-      paverAreaSqFt > 0
-        ? ceilSafe((areaSqFt / paverAreaSqFt) * (1 + wasteFactorNum / 100))
+    const blockCount =
+      blockFaceAreaSqFt > 0
+        ? ceilSafe((wallAreaSqFt / blockFaceAreaSqFt) * (1 + wasteFactorNum / 100))
         : 0;
 
     const baseDepthNum = Math.max(parseFloat(baseDepthIn) || 0, 0);
-    const baseVolumeCuYd = (areaSqFt * (baseDepthNum / 12)) / 27;
+    const baseTrenchWidthFt = blockWidthIn > 0 ? blockWidthIn / 12 : 1;
+    const baseVolumeCuYd = (lengthFt * (baseDepthNum / 12) * baseTrenchWidthFt) / 27;
     const baseTons = baseVolumeCuYd * BASE_TONS_PER_CUBIC_YARD;
 
-    const sandDepthNum = Math.max(parseFloat(sandDepthIn) || 0, 0);
-    const sandVolumeCuYd = (areaSqFt * (sandDepthNum / 12)) / 27;
-    const sandTons = sandVolumeCuYd * SAND_TONS_PER_CUBIC_YARD;
-
-    const jointSandBags =
-      areaSqFt > 0 ? ceilSafe(areaSqFt / SQ_FT_PER_JOINT_SAND_BAG) : 0;
+    const backfillWidthNum = Math.max(parseFloat(backfillWidthIn) || 0, 0);
+    const backfillVolumeCuYd = (lengthFt * heightFt * (backfillWidthNum / 12)) / 27;
+    const backfillTons = backfillVolumeCuYd * BASE_TONS_PER_CUBIC_YARD;
 
     return {
-      isValid: areaSqFt > 0 && paverAreaSqFt > 0,
-      areaSqFt,
-      paverCount,
+      isValid: wallAreaSqFt > 0 && blockFaceAreaSqFt > 0,
+      wallAreaSqFt,
+      blockCount,
       baseVolumeCuYd,
       baseTons,
-      sandVolumeCuYd,
-      sandTons,
-      jointSandBags,
+      backfillVolumeCuYd,
+      backfillTons,
     };
   }, [
     length,
-    width,
-    paverSizeKey,
+    height,
+    blockSizeKey,
     customWidthIn,
-    customLengthIn,
+    customHeightIn,
     wasteFactor,
     baseDepthIn,
-    sandDepthIn,
+    backfillWidthIn,
   ]);
 
   useEffect(() => {
     if (results.isValid && !hasTracked.current) {
       hasTracked.current = true;
-      trackToolUsed("paver_calculator");
+      trackToolUsed("retaining_wall_calculator");
     }
   }, [results.isValid]);
 
@@ -114,18 +105,18 @@ export function PaverCalculatorForm() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-lg">
             <Ruler className="size-4 text-accent" />
-            Patio Dimensions
+            Wall Dimensions
           </CardTitle>
           <CardDescription>
-            Enter the area you plan to pave and your preferred paver size.
+            Enter the wall you plan to build and your preferred block size.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-5 pt-2">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="paver-length">Length (ft)</Label>
+              <Label htmlFor="wall-length">Length (ft)</Label>
               <Input
-                id="paver-length"
+                id="wall-length"
                 type="number"
                 inputMode="decimal"
                 min="0"
@@ -135,30 +126,30 @@ export function PaverCalculatorForm() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="paver-width">Width (ft)</Label>
+              <Label htmlFor="wall-height">Height (ft)</Label>
               <Input
-                id="paver-width"
+                id="wall-height"
                 type="number"
                 inputMode="decimal"
                 min="0"
                 step="0.5"
-                value={width}
-                onChange={(e) => setWidth(e.target.value)}
+                value={height}
+                onChange={(e) => setHeight(e.target.value)}
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="paver-size">Paver Size</Label>
+            <Label htmlFor="wall-block-size">Block Size</Label>
             <select
-              id="paver-size"
+              id="wall-block-size"
               className={selectClassName}
-              value={paverSizeKey}
+              value={blockSizeKey}
               onChange={(e) =>
-                setPaverSizeKey(e.target.value as (typeof PAVER_SIZES)[number]["key"])
+                setBlockSizeKey(e.target.value as (typeof BLOCK_SIZES)[number]["key"])
               }
             >
-              {PAVER_SIZES.map((size) => (
+              {BLOCK_SIZES.map((size) => (
                 <option key={size.key} value={size.key}>
                   {size.label}
                 </option>
@@ -166,12 +157,12 @@ export function PaverCalculatorForm() {
             </select>
           </div>
 
-          {paverSizeKey === "custom" && (
+          {blockSizeKey === "custom" && (
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="paver-custom-width">Paver Width (in)</Label>
+                <Label htmlFor="wall-custom-width">Block Width (in)</Label>
                 <Input
-                  id="paver-custom-width"
+                  id="wall-custom-width"
                   type="number"
                   inputMode="decimal"
                   min="0"
@@ -181,15 +172,15 @@ export function PaverCalculatorForm() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="paver-custom-length">Paver Length (in)</Label>
+                <Label htmlFor="wall-custom-height">Block Height (in)</Label>
                 <Input
-                  id="paver-custom-length"
+                  id="wall-custom-height"
                   type="number"
                   inputMode="decimal"
                   min="0"
                   step="0.5"
-                  value={customLengthIn}
-                  onChange={(e) => setCustomLengthIn(e.target.value)}
+                  value={customHeightIn}
+                  onChange={(e) => setCustomHeightIn(e.target.value)}
                 />
               </div>
             </div>
@@ -197,9 +188,9 @@ export function PaverCalculatorForm() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="paver-waste">Waste Factor (%)</Label>
+              <Label htmlFor="wall-waste">Waste Factor (%)</Label>
               <Input
-                id="paver-waste"
+                id="wall-waste"
                 type="number"
                 inputMode="decimal"
                 min="0"
@@ -209,9 +200,9 @@ export function PaverCalculatorForm() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="paver-base-depth">Base Depth (in)</Label>
+              <Label htmlFor="wall-base-depth">Base Depth (in)</Label>
               <Input
-                id="paver-base-depth"
+                id="wall-base-depth"
                 type="number"
                 inputMode="decimal"
                 min="0"
@@ -223,15 +214,15 @@ export function PaverCalculatorForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="paver-sand-depth">Bedding Sand Depth (in)</Label>
+            <Label htmlFor="wall-backfill-width">Drainage Backfill Width (in)</Label>
             <Input
-              id="paver-sand-depth"
+              id="wall-backfill-width"
               type="number"
               inputMode="decimal"
               min="0"
-              step="0.25"
-              value={sandDepthIn}
-              onChange={(e) => setSandDepthIn(e.target.value)}
+              step="1"
+              value={backfillWidthIn}
+              onChange={(e) => setBackfillWidthIn(e.target.value)}
             />
           </div>
         </CardContent>
@@ -243,29 +234,29 @@ export function PaverCalculatorForm() {
           <CardDescription>
             {results.isValid
               ? "Rough quantities based on the inputs to the left."
-              : "Enter a patio length and width to see estimated materials."}
+              : "Enter a wall length and height to see estimated materials."}
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-2">
           {results.isValid ? (
             <>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-2">
+              <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-lg border border-border bg-card p-4">
                   <Ruler className="size-4 text-accent" strokeWidth={1.5} />
                   <p className="mt-3 font-heading text-2xl text-foreground">
-                    {formatNumber(results.areaSqFt, 0)}
+                    {formatNumber(results.wallAreaSqFt, 0)}
                   </p>
                   <p className="text-xs tracking-wide text-muted-foreground uppercase">
-                    Sq Ft Total Area
+                    Sq Ft Wall Face
                   </p>
                 </div>
                 <div className="rounded-lg border border-border bg-card p-4">
-                  <LayoutGrid className="size-4 text-accent" strokeWidth={1.5} />
+                  <BrickWall className="size-4 text-accent" strokeWidth={1.5} />
                   <p className="mt-3 font-heading text-2xl text-foreground">
-                    {formatNumber(results.paverCount, 0)}
+                    {formatNumber(results.blockCount, 0)}
                   </p>
                   <p className="text-xs tracking-wide text-muted-foreground uppercase">
-                    Pavers Needed
+                    Blocks Needed
                   </p>
                 </div>
                 <div className="rounded-lg border border-border bg-card p-4">
@@ -274,46 +265,36 @@ export function PaverCalculatorForm() {
                     {formatNumber(results.baseTons, 1)} tons
                   </p>
                   <p className="text-xs tracking-wide text-muted-foreground uppercase">
-                    Paver Base ({formatNumber(results.baseVolumeCuYd, 1)} cu yd)
+                    Base Material ({formatNumber(results.baseVolumeCuYd, 1)} cu yd)
                   </p>
                 </div>
                 <div className="rounded-lg border border-border bg-card p-4">
-                  <Package className="size-4 text-accent" strokeWidth={1.5} />
+                  <LayoutGrid className="size-4 text-accent" strokeWidth={1.5} />
                   <p className="mt-3 font-heading text-2xl text-foreground">
-                    {formatNumber(results.sandTons, 1)} tons
+                    {formatNumber(results.backfillTons, 1)} tons
                   </p>
                   <p className="text-xs tracking-wide text-muted-foreground uppercase">
-                    Bedding Sand ({formatNumber(results.sandVolumeCuYd, 1)} cu yd)
+                    Drainage Backfill ({formatNumber(results.backfillVolumeCuYd, 1)} cu yd)
                   </p>
                 </div>
               </div>
 
-              <div className="mt-3 rounded-lg border border-border bg-card p-4">
-                <p className="text-sm text-foreground">
-                  <span className="font-heading text-lg text-foreground">
-                    {formatNumber(results.jointSandBags, 0)}
-                  </span>{" "}
-                  bags of polymeric joint sand{" "}
-                  <span className="text-muted-foreground">(50 lb bags)</span>
-                </p>
-              </div>
-
               <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-                Estimates only — actual quantities vary with site grading,
-                drainage, and pattern complexity.{" "}
+                Estimates only — actual block count, base depth, and drainage
+                needs depend on your soil, wall height, and site grading.{" "}
                 <Link
                   href="/contact"
                   className="font-medium text-accent hover:underline"
                 >
                   Book a consultation
                 </Link>{" "}
-                for an exact material take-off on your project.
+                for an exact material plan on your project.
               </p>
             </>
           ) : (
             <div className="rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
-              Your estimated paver count, base material, and sand will appear
-              here.
+              Your estimated block count, base material, and drainage
+              backfill will appear here.
             </div>
           )}
         </CardContent>

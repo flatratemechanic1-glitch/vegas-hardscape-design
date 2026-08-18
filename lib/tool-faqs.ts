@@ -55,3 +55,59 @@ export const TURF_CALCULATOR_FAQS: Faq[] = [
       "It's a solid planning estimate for budgeting, not a final material order — actual roll layout, seam placement, and infill depend on your yard's exact shape and the specific turf product. Our design process maps the actual layout and material take-off before anyone orders product.",
   },
 ];
+
+export const RETAINING_WALL_CALCULATOR_FAQS: Faq[] = [
+  {
+    question: "How many retaining wall blocks do I need?",
+    answer:
+      "Divide the total wall face area (length x height) by the face area of one block, then add a waste factor for cuts at corners and ends. A common small block measuring 12x4 in. covers 1/3 sq ft per unit, so a 20 ft long, 3 ft tall wall (60 sq ft) needs roughly 180 blocks before waste.",
+  },
+  {
+    question: "How thick should the base be under a retaining wall?",
+    answer:
+      "A minimum of 6 in. of compacted crushed base is standard under the first course, more for taller walls or soft/expansive soil. Getting this base level and well-compacted matters more than almost anything else — an uneven base is the top cause of retaining walls leaning or settling over time.",
+  },
+  {
+    question: "Why does a retaining wall need drainage gravel behind it?",
+    answer:
+      "Backfilling with clean, free-draining crushed stone (rather than native soil) lets water pass through instead of building up hydrostatic pressure behind the wall. Without it, saturated soil is one of the most common causes of retaining wall failure, especially after heavy rain.",
+  },
+  {
+    question: "Do I need a permit or engineer for a retaining wall in Las Vegas?",
+    answer:
+      "Many Southern Nevada jurisdictions require an engineered design and permit once a wall exceeds roughly 4 ft in height (measured from the bottom of the footing) or holds back a slope with a surcharge load — but rules vary by city and county. Always confirm current requirements with your local building department before starting a tall wall.",
+  },
+  {
+    question: "Is this calculator accurate enough to order blocks from?",
+    answer:
+      "It's a solid planning estimate for budgeting, not a final material order — actual block count, base depth, and drainage needs depend on your soil, wall height, and site grading. Our design process includes an engineered take-off for anything beyond a short garden wall.",
+  },
+];
+
+export const CONCRETE_CALCULATOR_FAQS: Faq[] = [
+  {
+    question: "How much concrete do I need for a slab?",
+    answer:
+      "Multiply length x width x thickness (converted to feet) to get cubic feet, then divide by 27 to get cubic yards — that's the number ready-mix suppliers quote by. Always add a waste factor; concrete that runs short mid-pour is a real problem since a slab should be poured continuously.",
+  },
+  {
+    question: "Should I use bagged concrete or order ready-mix?",
+    answer:
+      "Bagged mix is fine for small pours like footings or post holes — under about 1 cubic yard. Beyond that, ready-mix delivered by truck is far more practical and gives more consistent strength than mixing dozens of bags by hand.",
+  },
+  {
+    question: "How thick should a concrete patio or driveway be?",
+    answer:
+      "4 in. is standard for patios, walkways, and other foot-traffic-only slabs. Driveways and anywhere vehicles will drive or park need 5-6 in., often with reinforcement, especially on our region's expansive and caliche-heavy soils.",
+  },
+  {
+    question: "Do I need rebar or wire mesh in a concrete slab?",
+    answer:
+      "Generally yes in the Las Vegas Valley — reinforcement helps control cracking from our soil movement and large day-to-night temperature swings. A common rule of thumb is a rebar grid on roughly 24 in. centers in both directions for residential slabs.",
+  },
+  {
+    question: "Is this calculator accurate enough to order concrete from?",
+    answer:
+      "It's a solid planning estimate for budgeting, not a final order — actual yardage should always be confirmed with your ready-mix supplier, who will also account for slab thickness variation and site access. Our design process includes precise take-offs for any concrete work tied to a project we design.",
+  },
+];

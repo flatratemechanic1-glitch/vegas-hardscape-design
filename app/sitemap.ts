@@ -10,6 +10,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools",
     "/tools/paver-calculator",
     "/tools/turf-calculator",
+    "/tools/retaining-wall-calculator",
+    "/tools/concrete-calculator",
     "/about",
     "/contact",
   ];

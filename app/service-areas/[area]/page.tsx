@@ -72,7 +72,7 @@ export default async function ServiceAreaPage(
           className="mx-auto flex max-w-4xl items-center justify-center gap-3 px-6 py-4 text-center text-sm text-foreground/80 transition-colors hover:text-accent lg:px-10"
         >
           <Calculator className="size-4 shrink-0 text-accent" strokeWidth={1.5} />
-          Planning your {area.name} project? Try our free paver &amp; turf
+          Planning your {area.name} project? Try our free planning
           calculators
           <span aria-hidden="true">&rarr;</span>
         </Link>

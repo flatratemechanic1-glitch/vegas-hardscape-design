@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { trackToolUsed } from "@/lib/analytics";
+import { ceilSafe, formatNumber } from "@/lib/calculator-utils";
 
 const ROLL_WIDTHS_FT = [12, 15] as const;
 
@@ -28,13 +29,6 @@ const selectClassName = cn(
   "h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none",
   "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 md:text-sm dark:bg-input/30"
 );
-
-function formatNumber(value: number, digits = 0) {
-  return value.toLocaleString("en-US", {
-    minimumFractionDigits: digits,
-    maximumFractionDigits: digits,
-  });
-}
 
 export function TurfCalculatorForm() {
   const [length, setLength] = useState("30");
@@ -56,15 +50,15 @@ export function TurfCalculatorForm() {
     const rollWidth = parseFloat(rollWidthFt) || 0;
     const shorterSide = Math.min(lengthFt, widthFt);
     const longerSide = Math.max(lengthFt, widthFt);
-    const stripsNeeded = rollWidth > 0 ? Math.ceil(shorterSide / rollWidth) : 0;
+    const stripsNeeded = rollWidth > 0 ? ceilSafe(shorterSide / rollWidth) : 0;
     const seams = Math.max(stripsNeeded - 1, 0);
     const seamTapeFt = seams * longerSide;
 
     const infillRateNum = Math.max(parseFloat(infillRate) || 0, 0);
     const infillLbs = areaSqFt * infillRateNum;
-    const infillBags = Math.ceil(infillLbs / 50);
+    const infillBags = ceilSafe(infillLbs / 50);
 
-    const staples = Math.ceil(areaSqFt * STAPLES_PER_SQ_FT);
+    const staples = ceilSafe(areaSqFt * STAPLES_PER_SQ_FT);
 
     const estimatedGallonsPerYear = areaSqFt * GALLONS_SAVED_PER_SQ_FT_PER_YEAR;
 
