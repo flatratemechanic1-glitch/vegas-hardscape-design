@@ -36,9 +36,10 @@ export function LocalBusinessJsonLd() {
       longitude: -115.3255,
     },
     areaServed: [
-      ...SERVICE_AREAS.map((name) => ({
+      ...SERVICE_AREAS.map((area) => ({
         "@type": "Place",
-        name,
+        name: area.name,
+        url: `${SITE_URL}/service-areas/${area.slug}`,
       })),
       ...SERVICE_ZIP_CODES.map((postalCode) => ({
         "@type": "PostalAddress",

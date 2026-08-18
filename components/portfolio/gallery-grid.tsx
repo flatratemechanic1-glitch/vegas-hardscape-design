@@ -16,6 +16,9 @@ export type GalleryItem = {
   caption: string;
   aspect: string;
   image: string;
+  // SERVICE_AREAS slug this rendering is tagged to, if any — lets
+  // /service-areas/{slug} pages show real photos for the areas that have them.
+  area?: string;
 };
 
 const navButtonClass =

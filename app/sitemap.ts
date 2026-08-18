@@ -1,8 +1,11 @@
 import type { MetadataRoute } from "next";
+import { SERVICE_AREAS } from "@/lib/constants";
 import { SITE_URL } from "@/lib/site-config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ["", "/services", "/portfolio", "/about", "/contact"];
+  const staticRoutes = ["", "/services", "/portfolio", "/about", "/contact"];
+  const areaRoutes = SERVICE_AREAS.map((area) => `/service-areas/${area.slug}`);
+  const routes = [...staticRoutes, ...areaRoutes];
 
   return routes.map((route) => ({
     url: `${SITE_URL}${route}`,

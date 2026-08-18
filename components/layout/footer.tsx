@@ -55,11 +55,19 @@ export function Footer() {
           </p>
           <p className="flex items-start gap-2 text-sm text-muted-foreground">
             <MapPin className="mt-0.5 size-4 shrink-0" />
-            <span>
-              {SERVICE_AREAS.join(", ")}, and surrounding Las Vegas Valley
-              communities.
-            </span>
+            <span>Serving these Las Vegas Valley communities and beyond:</span>
           </p>
+          <nav className="flex flex-wrap gap-x-3 gap-y-1">
+            {SERVICE_AREAS.map((area) => (
+              <Link
+                key={area.slug}
+                href={`/service-areas/${area.slug}`}
+                className="text-sm text-muted-foreground transition-colors hover:text-accent"
+              >
+                {area.name}
+              </Link>
+            ))}
+          </nav>
         </div>
 
         <div className="space-y-3">

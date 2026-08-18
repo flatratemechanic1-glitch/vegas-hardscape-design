@@ -230,10 +230,10 @@ export function ContactPageContent() {
             <div className="mt-4 flex flex-wrap gap-2">
               {SERVICE_AREAS.map((area) => (
                 <span
-                  key={area}
+                  key={area.slug}
                   className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"
                 >
-                  {area}
+                  {area.name}
                 </span>
               ))}
             </div>

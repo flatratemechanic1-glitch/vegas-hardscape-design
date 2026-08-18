@@ -4,7 +4,7 @@ import { Compass, PenTool, ShieldCheck } from "lucide-react";
 import { Hero } from "@/components/home/hero";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { GOOGLE_BUSINESS_PROFILE_URL, SERVICES } from "@/lib/constants";
+import { GOOGLE_BUSINESS_PROFILE_URL, SERVICES, TRUST_SIGNALS } from "@/lib/constants";
 import { FEATURED_TESTIMONIAL } from "@/lib/testimonials";
 
 // Overrides the root layout's long, tagline-based title/description with a
@@ -18,24 +18,6 @@ export const metadata: Metadata = {
   description:
     "Custom hardscape and pool design, photorealistic 3D renderings, and owner's rep consulting for luxury homes in Las Vegas and Summerlin.",
 };
-
-const TRUST_SIGNALS = [
-  {
-    title: "Design-Only, By Design",
-    description:
-      "We plan, render, and consult — your licensed, insured contractors handle every stage of physical construction.",
-  },
-  {
-    title: "Independent Advocate",
-    description:
-      "We are never paid by the contractors we oversee, and our precise material take-offs give you an accurate cost baseline — so you know when a bid is fair, not inflated.",
-  },
-  {
-    title: "See It Before You Build It",
-    description:
-      "Photorealistic renderings let you approve materials, lighting, and layout on-screen — before ground is broken.",
-  },
-];
 
 const SERVICE_ICONS = [PenTool, Compass, ShieldCheck];
 

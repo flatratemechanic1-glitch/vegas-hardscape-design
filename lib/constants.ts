@@ -26,18 +26,87 @@ export const GOOGLE_BUSINESS_PROFILE_URL = "https://maps.app.goo.gl/xrchjzeXwf1z
 // Short marquee shown in the hero and nav — the full list lives in SERVICE_AREAS below.
 export const SERVICE_AREA_HIGHLIGHTS = ["Summerlin", "The Lakes", "Queensridge"];
 
-// Every named community we service, shown in full on the footer and Contact page.
-export const SERVICE_AREAS = [
-  "Summerlin",
-  "Summerlin North",
-  "Peccole Ranch",
-  "The Lakes",
-  "Queensridge",
-  "Centennial Hills",
-  "Desert Shores",
-  "Sun City Summerlin",
-  "Lone Mountain Village",
-  "North Las Vegas",
+export type ServiceArea = {
+  name: string;
+  slug: string;
+  // 1-2 sentences of real, verifiable community character — the factual
+  // opener for that area's /service-areas page, so pages differ by more than
+  // a swapped name. Sourced from public real-estate/community guides
+  // (homes.com, nevadarealestategroup.com, neighborhoodscout.com, 55places.com,
+  // summerlin.com, city-data.com, neighborhoodsinlasvegas.com) — general public
+  // facts, not business-specific claims.
+  blurb: string;
+};
+
+// Every named community we service, shown in full on the footer, Contact
+// page, and as individual /service-areas/{slug} landing pages.
+export const SERVICE_AREAS: ServiceArea[] = [
+  {
+    name: "Summerlin",
+    slug: "summerlin",
+    blurb:
+      "A 22,500-acre master-planned community along the western rim of the valley, about 20 minutes from the Strip, built around Red Rock Canyon views, 150+ miles of trails, and more than 30 individual villages.",
+  },
+  {
+    name: "Summerlin North",
+    slug: "summerlin-north",
+    blurb:
+      "Home to some of Summerlin's most established villages, including guard-gated enclaves like Willow Creek and age-restricted communities like Regency at Summerlin, with mature landscaping and decades-old HOA governance.",
+  },
+  {
+    name: "Summerlin South",
+    slug: "summerlin-south",
+    blurb:
+      "Anchored by Downtown Summerlin, Red Rock Resort, and the Las Vegas Ballpark, with 10 distinct villages — from The Ridges' custom estates to family-friendly neighborhoods — connected by 200+ miles of trails.",
+  },
+  {
+    name: "Peccole Ranch",
+    slug: "peccole-ranch",
+    blurb:
+      "A mature, walkable community of roughly 3,000 homes built from the late 1980s through the early 2000s, known for 46 acres of tree-lined greenbelt trails, tennis courts, and a mix of townhomes, single-family homes, and gated executive enclaves.",
+  },
+  {
+    name: "The Lakes",
+    slug: "the-lakes",
+    blurb:
+      "One of Las Vegas's first master-planned communities, built in the 1980s around 30-acre Lake Sahara, where many homes back directly onto the water with private docks.",
+  },
+  {
+    name: "Queensridge",
+    slug: "queensridge",
+    blurb:
+      "A guard-gated, 987-home luxury estate community inside the Peccole Ranch master plan, known for Mediterranean- and Tuscan-influenced architecture and a central location about 15 minutes from the Strip.",
+  },
+  {
+    name: "Centennial Hills",
+    slug: "centennial-hills",
+    blurb:
+      "Sits in the far northwest valley against the Sheep and Spring Mountain foothills — a largely built-out, family-oriented community of newer homes, big regional parks, and mountain views.",
+  },
+  {
+    name: "Desert Shores",
+    slug: "desert-shores",
+    blurb:
+      "A lake community of roughly 3,350 homes built around four man-made lakes — Jacqueline, Sarah, Maddison, and Lindsey — with private boat docks, a swim lagoon, and resident-controlled HOA districts.",
+  },
+  {
+    name: "Sun City Summerlin",
+    slug: "sun-city-summerlin",
+    blurb:
+      "Southern Nevada's original Del Webb active-adult community — an age-55+ neighborhood of more than 7,700 homes set against the Spring Mountains with three golf courses and resort-style amenities.",
+  },
+  {
+    name: "Lone Mountain Village",
+    slug: "lone-mountain-village",
+    blurb:
+      "Sits in the northwest valley near its namesake rock formation and Red Rock Canyon — known for larger lots, RV parking, and a quieter, more spacious suburban feel than more central neighborhoods.",
+  },
+  {
+    name: "North Las Vegas",
+    slug: "north-las-vegas",
+    blurb:
+      "Its own incorporated city — Nevada's fourth largest — with a fast-growing, family-oriented character distinct from the Strip, including newer master-planned pockets like Aliante and Valley Vista in the north valley.",
+  },
 ];
 
 // Not rendered as visible copy — used only for LocalBusiness structured data so
@@ -70,6 +139,32 @@ export type Service = {
   summary: string;
   description: string;
 };
+
+export type TrustSignal = {
+  title: string;
+  description: string;
+};
+
+// Shown on the homepage, and reused (text-only, no photos) on
+// /service-areas pages for neighborhoods without tagged portfolio images —
+// real content instead of a repeated/generic photo gallery.
+export const TRUST_SIGNALS: TrustSignal[] = [
+  {
+    title: "Design-Only, By Design",
+    description:
+      "We plan, render, and consult — your licensed, insured contractors handle every stage of physical construction.",
+  },
+  {
+    title: "Independent Advocate",
+    description:
+      "We are never paid by the contractors we oversee, and our precise material take-offs give you an accurate cost baseline — so you know when a bid is fair, not inflated.",
+  },
+  {
+    title: "See It Before You Build It",
+    description:
+      "Photorealistic renderings let you approve materials, lighting, and layout on-screen — before ground is broken.",
+  },
+];
 
 // Contact form photo uploads — kept in one place so the client-side compression
 // targets and the server-side defense-in-depth checks can't drift out of sync.
