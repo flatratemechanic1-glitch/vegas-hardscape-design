@@ -13,7 +13,7 @@ import { TrackedPhoneLink } from "@/components/layout/tracked-phone-link";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-secondary/40">
+    <footer className="border-t border-border bg-secondary/40 print:hidden">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4 lg:px-10">
         <div className="space-y-3">
           <p className="flex items-center gap-2.5 font-heading text-lg text-foreground">

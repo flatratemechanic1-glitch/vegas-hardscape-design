@@ -256,3 +256,31 @@ export const FIRE_PIT_CALCULATOR_FAQS: Faq[] = [
       "It's a solid planning estimate for budgeting, not a final material order — actual block count depends on the specific curved or straight block product you choose, since some are designed specifically for circular construction. Our design process includes an exact take-off for any fire feature tied to a project we design.",
   },
 ];
+
+export const PREP_KIT_FAQS: Faq[] = [
+  {
+    question: "What should I bring to my first design consultation?",
+    answer:
+      "Photos of your yard, any HOA architectural guidelines or CC&Rs, an existing plot plan or survey if you have one, a rough budget range, and a couple of inspiration photos of styles you like. This prep kit's checklist walks through all of it.",
+  },
+  {
+    question: "Do I need HOA approval before starting a backyard project in Las Vegas?",
+    answer:
+      "Many Las Vegas Valley HOAs require architectural review before hardscape, pool, or fencing changes — sometimes even for artificial turf or gravel conversions. Check your HOA's CC&Rs early, since approval timelines can affect your overall project schedule.",
+  },
+  {
+    question: "How accurate do my measurements need to be for this worksheet?",
+    answer:
+      "Close enough to plan with — a tape measure or even paced-off steps is fine at this stage. This worksheet is for getting organized before a consultation, not for finalizing a design; exact measurements come later as part of the design process.",
+  },
+  {
+    question: "What if I don't know my yard's exact dimensions?",
+    answer:
+      "Rough estimates are fine, or check if your county assessor's website or original builder plans have your lot dimensions. Bring whatever you have — even an approximate sketch is a useful starting point for a consultation.",
+  },
+  {
+    question: "Can I use this checklist with any designer, not just you?",
+    answer:
+      "Yes — it's meant to help you walk into any first consultation organized and ready with good questions, regardless of who you end up working with.",
+  },
+];

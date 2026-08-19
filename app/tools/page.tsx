@@ -3,6 +3,7 @@ import Link from "next/link";
 import {
   BrickWall,
   Calculator,
+  ClipboardCheck,
   Droplet,
   Flame,
   FlaskConical,
@@ -133,6 +134,42 @@ export default function ToolsPage() {
               </Link>
             );
           })}
+        </div>
+      </section>
+
+      <section className="border-t border-border bg-secondary/40">
+        <div className="mx-auto max-w-6xl px-6 py-24 lg:px-10">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-medium tracking-[0.3em] text-accent uppercase">
+              More Resources
+            </p>
+            <h2 className="mt-4 font-heading text-3xl text-foreground sm:text-4xl">
+              Not a Calculator, But Just as Free
+            </h2>
+          </div>
+
+          <div className="mt-16 flex justify-center">
+            <Link href="/backyard-prep-kit" className="group w-full max-w-md">
+              <Card className="h-full transition-colors group-hover:bg-secondary/60">
+                <CardHeader>
+                  <ClipboardCheck className="size-6 text-accent" strokeWidth={1.5} />
+                  <CardTitle className="mt-3 text-xl">
+                    Backyard Project Prep Kit
+                  </CardTitle>
+                  <CardDescription>
+                    A printable yard measurement worksheet and design
+                    consultation checklist to get organized before your
+                    first meeting.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <span className="text-xs font-medium tracking-[0.15em] text-accent uppercase group-hover:underline">
+                    Get the Prep Kit
+                  </span>
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
         </div>
       </section>
     </>

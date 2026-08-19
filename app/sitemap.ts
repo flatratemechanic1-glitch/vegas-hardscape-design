@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools/gravel-calculator",
     "/tools/mulch-calculator",
     "/tools/fire-pit-calculator",
+    "/backyard-prep-kit",
     "/plants",
     "/about",
     "/contact",
