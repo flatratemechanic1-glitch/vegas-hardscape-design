@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Calculator, Compass, PenTool, ShieldCheck } from "lucide-react";
+import { Calculator, Compass, Leaf, PenTool, ShieldCheck } from "lucide-react";
 import { GalleryGrid } from "@/components/portfolio/gallery-grid";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -74,6 +74,18 @@ export default async function ServiceAreaPage(
           <Calculator className="size-4 shrink-0 text-accent" strokeWidth={1.5} />
           Planning your {area.name} project? Try our free planning
           calculators
+          <span aria-hidden="true">&rarr;</span>
+        </Link>
+      </section>
+
+      <section className="border-b border-border bg-secondary/30">
+        <Link
+          href="/plants"
+          className="mx-auto flex max-w-4xl items-center justify-center gap-3 px-6 py-4 text-center text-sm text-foreground/80 transition-colors hover:text-accent lg:px-10"
+        >
+          <Leaf className="size-4 shrink-0 text-accent" strokeWidth={1.5} />
+          Looking for drought-tolerant plants for {area.name}? Browse our
+          desert plant guide
           <span aria-hidden="true">&rarr;</span>
         </Link>
       </section>

@@ -26,3 +26,9 @@ export function trackPhoneClick(location: "footer" | "hero_form" | "contact_page
 export function trackToolUsed(tool: string) {
   window.gtag?.("event", "tool_used", { tool });
 }
+
+// Fires when a visitor carries their selected plants from /plants into a
+// quote request, so this funnel is measurable alongside the calculators.
+export function trackPlantsQuoteRequested(plantCount: number) {
+  window.gtag?.("event", "plants_quote_requested", { plant_count: plantCount });
+}

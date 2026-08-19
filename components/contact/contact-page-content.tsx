@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
+import { useSearchParams } from "next/navigation";
 import { Mail, MapPin, Phone, Star, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -40,6 +41,21 @@ type PhotoAttachment = {
 };
 
 export function ContactPageContent() {
+  const searchParams = useSearchParams();
+  const [selectedPlants, setSelectedPlants] = useState<string[]>(() => {
+    const raw = searchParams.get("plants");
+    return raw
+      ? raw
+          .split(",")
+          .map((name) => name.trim())
+          .filter(Boolean)
+      : [];
+  });
+  const [messageDefault] = useState(() =>
+    selectedPlants.length > 0
+      ? `I'm interested in adding these desert plants to my landscape: ${selectedPlants.join(", ")}.\n\n`
+      : ""
+  );
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -47,6 +63,10 @@ export function ContactPageContent() {
   const [photoSelectionError, setPhotoSelectionError] = useState<string | null>(null);
   const photosRef = useRef(photos);
   photosRef.current = photos;
+
+  function handleRemovePlant(name: string) {
+    setSelectedPlants((prev) => prev.filter((p) => p !== name));
+  }
 
   useEffect(() => {
     return () => {
@@ -315,6 +335,31 @@ export function ContactPageContent() {
                   </select>
                 </div>
 
+                {selectedPlants.length > 0 && (
+                  <div className="space-y-2">
+                    <Label>Selected Plants</Label>
+                    <input type="hidden" name="plants" value={selectedPlants.join(", ")} />
+                    <div className="flex flex-wrap gap-2">
+                      {selectedPlants.map((name) => (
+                        <span
+                          key={name}
+                          className="flex items-center gap-1.5 rounded-full border border-border bg-secondary/40 py-1 pr-1.5 pl-3 text-xs text-foreground"
+                        >
+                          {name}
+                          <button
+                            type="button"
+                            aria-label={`Remove ${name}`}
+                            onClick={() => handleRemovePlant(name)}
+                            className="rounded-full p-0.5 text-muted-foreground hover:text-foreground"
+                          >
+                            <X className="size-3" />
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 <div className="space-y-2">
                   <Label htmlFor="message">Project Description</Label>
                   <Textarea
@@ -322,6 +367,7 @@ export function ContactPageContent() {
                     name="message"
                     required
                     rows={5}
+                    defaultValue={messageDefault}
                     placeholder="Tell us about your space, goals, and timeline."
                   />
                 </div>

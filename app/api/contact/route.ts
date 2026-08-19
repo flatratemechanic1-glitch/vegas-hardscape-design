@@ -18,6 +18,7 @@ type ContactFields = {
   email: string;
   budget: string;
   message: string;
+  plants: string;
 };
 
 function getStringField(formData: FormData, key: string): string | null {
@@ -31,6 +32,7 @@ function extractFields(formData: FormData): ContactFields | null {
   const email = getStringField(formData, "email");
   const budget = getStringField(formData, "budget");
   const message = getStringField(formData, "message");
+  const plants = getStringField(formData, "plants") ?? "";
 
   if (
     !name?.trim() ||
@@ -42,7 +44,7 @@ function extractFields(formData: FormData): ContactFields | null {
     return null;
   }
 
-  return { name, phone, email, budget, message };
+  return { name, phone, email, budget, message, plants };
 }
 
 export async function POST(request: Request) {
@@ -69,7 +71,7 @@ export async function POST(request: Request) {
   if (!fields) {
     return Response.json({ error: "Missing required fields." }, { status: 400 });
   }
-  const { name, phone, email, budget, message } = fields;
+  const { name, phone, email, budget, message, plants } = fields;
 
   if (!EMAIL_REGEX.test(email.trim())) {
     return Response.json({ error: "Please enter a valid email address." }, { status: 400 });
@@ -139,6 +141,7 @@ export async function POST(request: Request) {
         `Email: ${email}`,
         `Budget: ${budget || "Not provided"}`,
         `Photos attached: ${attachments.length}`,
+        ...(plants.trim() ? [`Plants of interest: ${plants.trim()}`] : []),
         "",
         "Project description:",
         message,
