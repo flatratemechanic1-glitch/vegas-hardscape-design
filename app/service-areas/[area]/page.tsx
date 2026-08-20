@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Calculator, Compass, Leaf, PenTool, ShieldCheck } from "lucide-react";
 import { GalleryGrid } from "@/components/portfolio/gallery-grid";
+import { FaqJsonLd } from "@/components/seo/faq-jsonld";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SERVICE_AREAS, SERVICES, TRUST_SIGNALS } from "@/lib/constants";
@@ -46,6 +47,8 @@ export default async function ServiceAreaPage(
 
   return (
     <>
+      <FaqJsonLd />
+
       <section className="border-b border-border">
         <div className="mx-auto max-w-4xl px-6 py-24 text-center lg:px-10">
           <p className="text-xs font-medium tracking-[0.3em] text-accent uppercase">

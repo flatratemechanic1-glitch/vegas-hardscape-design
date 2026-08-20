@@ -11,8 +11,8 @@ import { SITE_URL } from "@/lib/site-config";
 
 // No public storefront — this is a mobile design practice, so geo is the
 // approximate center of the service area (Summerlin/West Las Vegas), not a
-// street address. Add social profile URLs to `sameAs` alongside the GBP link
-// once those exist.
+// street address. Add the Yelp profile URL to `sameAs` alongside GBP/Houzz
+// once that listing is out of review and live.
 export function LocalBusinessJsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -43,12 +43,16 @@ export function LocalBusinessJsonLd() {
       })),
       ...SERVICE_ZIP_CODES.map((postalCode) => ({
         "@type": "PostalAddress",
+        name: `ZIP ${postalCode}`,
         postalCode,
         addressRegion: "NV",
         addressCountry: "US",
       })),
     ],
-    sameAs: [GOOGLE_BUSINESS_PROFILE_URL] as string[],
+    sameAs: [
+      GOOGLE_BUSINESS_PROFILE_URL,
+      "https://www.houzz.com/pro/reggie-curtis80/vegas-hardscape-design",
+    ] as string[],
   };
 
   return (
