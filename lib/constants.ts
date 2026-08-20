@@ -129,6 +129,7 @@ export const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/portfolio", label: "Portfolio" },
+  { href: "/3d-preview", label: "3D Preview" },
   { href: "/tools", label: "Free Tools" },
   { href: "/plants", label: "Desert Plants" },
   { href: "/about", label: "About" },
