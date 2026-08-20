@@ -1,11 +1,12 @@
 "use client";
 
 import { Suspense, useLayoutEffect } from "react";
-import { Canvas } from "@react-three/fiber";
-import { Loader, OrbitControls, Stage, useGLTF } from "@react-three/drei";
+import { Canvas, useThree } from "@react-three/fiber";
+import { Loader, OrbitControls, Stage, useGLTF, useTexture } from "@react-three/drei";
 import * as THREE from "three";
 
 const MODEL_URL = "/models/pool-showcase.glb";
+const PAVER_TEXTURE_URL = "/models/paver-tile.png";
 
 const EDGE_MATERIAL = new THREE.LineBasicMaterial({
   color: "#2a2a2a",
@@ -13,8 +14,34 @@ const EDGE_MATERIAL = new THREE.LineBasicMaterial({
   opacity: 0.35,
 });
 
+// The source model's deck/walkway materials are just plain speckled-stone
+// swatches with no grout lines baked in, and the deck geometry itself is a
+// handful of large flat quads rather than individual paver tiles — so
+// there's no grid to recover from the export as-is. Swap in a generated
+// large-format paver texture (repeating so it reads as individual tiles)
+// to match the tiled look of the SketchUp reference.
+const DECK_MATERIAL_NAMES = new Set([
+  "Screen_Shot_2022_06_21_at_5_41_43_PM",
+  "Screen_Shot_2022_06_21_at_5_38_38_PM",
+  "Ty_Gray1",
+  "Ty_Gray2",
+  "M_76768980_cb14_4354_a991_ff8a514b30c7",
+  "M_8617884d_1771_4d2f_8a5c_0538b207e292",
+]);
+
 function PoolModel() {
   const { scene } = useGLTF(MODEL_URL);
+  const paverTexture = useTexture(PAVER_TEXTURE_URL);
+  const { gl } = useThree();
+
+  useLayoutEffect(() => {
+    paverTexture.wrapS = THREE.RepeatWrapping;
+    paverTexture.wrapT = THREE.RepeatWrapping;
+    paverTexture.repeat.set(4, 4);
+    paverTexture.colorSpace = THREE.SRGBColorSpace;
+    paverTexture.anisotropy = gl.capabilities.getMaxAnisotropy();
+    paverTexture.needsUpdate = true;
+  }, [paverTexture, gl]);
 
   // SketchUp's default style always draws crisp black edge lines between
   // faces (tile grout lines, panel seams, silhouette outlines) — that's
@@ -26,10 +53,16 @@ function PoolModel() {
     const added: THREE.LineSegments[] = [];
     scene.traverse((child) => {
       if (child instanceof THREE.Mesh && child.geometry) {
+        const material = Array.isArray(child.material) ? child.material[0] : child.material;
+
+        if (material && DECK_MATERIAL_NAMES.has(material.name) && "map" in material) {
+          (material as THREE.MeshStandardMaterial).map = paverTexture;
+          material.needsUpdate = true;
+        }
+
         // The junipers use a leaf-card texture ("Branch") built from many
         // small overlapping quads — edge lines there just turn into a
         // scribbly mess rather than a clean outline, so skip foliage.
-        const material = Array.isArray(child.material) ? child.material[0] : child.material;
         if (material?.name === "Branch") return;
 
         const edges = new THREE.EdgesGeometry(child.geometry, 20);
@@ -44,12 +77,13 @@ function PoolModel() {
         lines.removeFromParent();
       }
     };
-  }, [scene]);
+  }, [scene, paverTexture]);
 
   return <primitive object={scene} />;
 }
 
 useGLTF.preload(MODEL_URL);
+useTexture.preload(PAVER_TEXTURE_URL);
 
 // This particular export is a full ~50x85ft property (pool/patio at the
 // house end, a long juniper hedge and planters running the depth of the
