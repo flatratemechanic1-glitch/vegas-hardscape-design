@@ -7,6 +7,7 @@ import * as THREE from "three";
 
 const MODEL_URL = "/models/pool-showcase.glb";
 const PAVER_TEXTURE_URL = "/models/paver-tile.png";
+const GRASS_TEXTURE_URL = "/models/grass-tile.png";
 
 const EDGE_MATERIAL = new THREE.LineBasicMaterial({
   color: "#2a2a2a",
@@ -29,19 +30,36 @@ const DECK_MATERIAL_NAMES = new Set([
   "M_8617884d_1771_4d2f_8a5c_0538b207e292",
 ]);
 
+// Same story as the deck: the lawn is a single flat solid-color material
+// with zero texture, no blade detail, no color variation at all.
+const GRASS_MATERIAL_NAMES = new Set(["Ty_Green"]);
+
 function PoolModel() {
   const { scene } = useGLTF(MODEL_URL);
   const paverTexture = useTexture(PAVER_TEXTURE_URL);
+  const grassTexture = useTexture(GRASS_TEXTURE_URL);
   const { gl } = useThree();
 
   useLayoutEffect(() => {
     paverTexture.wrapS = THREE.RepeatWrapping;
     paverTexture.wrapT = THREE.RepeatWrapping;
-    paverTexture.repeat.set(4, 4);
+    // Same real-world-inch UV convention as the grass — repeat = 1/tile-size
+    // gives an actual ~28in paver instead of an arbitrary small integer.
+    paverTexture.repeat.set(1 / 28, 1 / 28);
     paverTexture.colorSpace = THREE.SRGBColorSpace;
     paverTexture.anisotropy = gl.capabilities.getMaxAnisotropy();
     paverTexture.needsUpdate = true;
-  }, [paverTexture, gl]);
+
+    grassTexture.wrapS = THREE.RepeatWrapping;
+    grassTexture.wrapT = THREE.RepeatWrapping;
+    // The source model's UVs are in real-world inches (not normalized 0-1),
+    // so repeat has to be computed as 1/desired-tile-size rather than an
+    // arbitrary small integer — this makes each texture tile ~28in square.
+    grassTexture.repeat.set(1 / 28, 1 / 28);
+    grassTexture.colorSpace = THREE.SRGBColorSpace;
+    grassTexture.anisotropy = gl.capabilities.getMaxAnisotropy();
+    grassTexture.needsUpdate = true;
+  }, [paverTexture, grassTexture, gl]);
 
   // SketchUp's default style always draws crisp black edge lines between
   // faces (tile grout lines, panel seams, silhouette outlines) — that's
@@ -57,6 +75,11 @@ function PoolModel() {
 
         if (material && DECK_MATERIAL_NAMES.has(material.name) && "map" in material) {
           (material as THREE.MeshStandardMaterial).map = paverTexture;
+          material.needsUpdate = true;
+        }
+
+        if (material && GRASS_MATERIAL_NAMES.has(material.name) && "map" in material) {
+          (material as THREE.MeshStandardMaterial).map = grassTexture;
           material.needsUpdate = true;
         }
 
@@ -77,13 +100,14 @@ function PoolModel() {
         lines.removeFromParent();
       }
     };
-  }, [scene, paverTexture]);
+  }, [scene, paverTexture, grassTexture]);
 
   return <primitive object={scene} />;
 }
 
 useGLTF.preload(MODEL_URL);
 useTexture.preload(PAVER_TEXTURE_URL);
+useTexture.preload(GRASS_TEXTURE_URL);
 
 // This particular export is a full ~50x85ft property (pool/patio at the
 // house end, a long juniper hedge and planters running the depth of the
