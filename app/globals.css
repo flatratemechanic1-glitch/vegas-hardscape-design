@@ -61,12 +61,12 @@
   --secondary-foreground: #1c1a17;
   --muted: #ede7dc;
   --muted-foreground: #6b6255;
-  --accent: #a6813c;
+  --accent: #7a5f2e;
   --accent-foreground: #f5f1ea;
   --destructive: oklch(0.577 0.245 27.325);
   --border: #e4ddcf;
   --input: #e4ddcf;
-  --ring: #a6813c;
+  --ring: #7a5f2e;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);

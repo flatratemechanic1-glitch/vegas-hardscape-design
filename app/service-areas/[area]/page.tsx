@@ -117,10 +117,9 @@ export default async function ServiceAreaPage(
                 </p>
                 <Link
                   href="/services"
-                  aria-label={`Learn more about ${service.title}`}
                   className="text-xs font-medium tracking-[0.15em] text-accent uppercase hover:underline"
                 >
-                  Learn More
+                  Learn More<span className="sr-only"> about {service.title}</span>
                 </Link>
               </div>
             );
