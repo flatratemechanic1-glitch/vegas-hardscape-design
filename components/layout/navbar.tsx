@@ -32,7 +32,7 @@ export function Navbar() {
           {SITE_NAME}
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-5 xl:flex 2xl:gap-7">
           {NAV_LINKS.map((link) => {
             const active =
               link.href === "/"
@@ -43,7 +43,7 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "text-xs font-medium tracking-[0.15em] uppercase transition-colors hover:text-accent",
+                  "text-xs font-medium tracking-[0.1em] whitespace-nowrap uppercase transition-colors hover:text-accent",
                   active ? "text-accent" : "text-foreground/70"
                 )}
               >
@@ -55,7 +55,7 @@ export function Navbar() {
 
         <Link
           href="/contact"
-          className={cn(buttonVariants({ size: "lg" }), "hidden px-5 md:inline-flex")}
+          className={cn(buttonVariants({ size: "lg" }), "hidden px-5 xl:inline-flex")}
         >
           Book a Consultation
         </Link>
@@ -64,7 +64,7 @@ export function Navbar() {
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
-          className="text-foreground md:hidden"
+          className="text-foreground xl:hidden"
           onClick={() => setOpen((v) => !v)}
         >
           {open ? <X className="size-6" /> : <Menu className="size-6" />}
@@ -72,7 +72,7 @@ export function Navbar() {
       </div>
 
       {open && (
-        <nav className="flex flex-col gap-1 border-t border-border/80 bg-background px-6 py-6 md:hidden">
+        <nav className="flex flex-col gap-1 border-t border-border/80 bg-background px-6 py-6 xl:hidden">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}

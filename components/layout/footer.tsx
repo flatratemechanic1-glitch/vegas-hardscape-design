@@ -33,7 +33,7 @@ export function Footer() {
         </div>
 
         <div className="space-y-3">
-          <p className="text-xs font-medium tracking-[0.15em] text-foreground/60 uppercase">
+          <p className="text-xs font-medium tracking-[0.15em] text-muted-foreground uppercase">
             Navigate
           </p>
           <nav className="flex flex-col gap-2">
@@ -50,7 +50,7 @@ export function Footer() {
         </div>
 
         <div className="space-y-3">
-          <p className="text-xs font-medium tracking-[0.15em] text-foreground/60 uppercase">
+          <p className="text-xs font-medium tracking-[0.15em] text-muted-foreground uppercase">
             Service Areas
           </p>
           <p className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -71,7 +71,7 @@ export function Footer() {
         </div>
 
         <div className="space-y-3">
-          <p className="text-xs font-medium tracking-[0.15em] text-foreground/60 uppercase">
+          <p className="text-xs font-medium tracking-[0.15em] text-muted-foreground uppercase">
             Contact
           </p>
           <TrackedPhoneLink
@@ -101,7 +101,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-border px-6 py-6 lg:px-10">
-        <p className="mx-auto max-w-7xl text-xs text-muted-foreground/80">
+        <p className="mx-auto max-w-7xl text-xs text-muted-foreground">
           {SITE_NAME} provides design, rendering, and owner&apos;s
           representative consulting services only. We do not perform
           construction, installation, or physical contracting work; all
