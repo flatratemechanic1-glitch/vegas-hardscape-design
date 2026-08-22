@@ -125,13 +125,22 @@ export const SERVICE_ZIP_CODES = [
   "89166",
 ];
 
-export const NAV_LINKS = [
+export type NavLink = { href: string; label: string };
+export type NavGroup = { label: string; children: readonly NavLink[] };
+export type NavItem = NavLink | NavGroup;
+
+export const NAV_LINKS: readonly NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/portfolio", label: "Portfolio" },
-  { href: "/3d-preview", label: "3D Preview" },
-  { href: "/tools", label: "Free Tools" },
-  { href: "/plants", label: "Desert Plants" },
+  {
+    label: "Resources",
+    children: [
+      { href: "/3d-preview", label: "3D Preview" },
+      { href: "/tools", label: "Free Tools" },
+      { href: "/plants", label: "Desert Plants" },
+    ],
+  },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ] as const;

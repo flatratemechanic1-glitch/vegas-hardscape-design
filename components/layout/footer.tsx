@@ -37,7 +37,9 @@ export function Footer() {
             Navigate
           </p>
           <nav className="flex flex-col gap-2">
-            {NAV_LINKS.map((link) => (
+            {NAV_LINKS.flatMap((item) =>
+              "children" in item ? item.children : [item]
+            ).map((link) => (
               <Link
                 key={link.href}
                 href={link.href}

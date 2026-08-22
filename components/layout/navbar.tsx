@@ -6,8 +6,24 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuPopup,
+  NavigationMenuPortal,
+  NavigationMenuPositioner,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS, SITE_NAME } from "@/lib/constants";
+
+function isActive(pathname: string, href: string) {
+  return href === "/" ? pathname === "/" : pathname.startsWith(href);
+}
 
 export function Navbar() {
   const pathname = usePathname();
@@ -32,26 +48,62 @@ export function Navbar() {
           {SITE_NAME}
         </Link>
 
-        <nav className="hidden items-center gap-5 xl:flex 2xl:gap-7">
-          {NAV_LINKS.map((link) => {
-            const active =
-              link.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(link.href);
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "text-xs font-medium tracking-[0.1em] whitespace-nowrap uppercase transition-colors hover:text-accent",
-                  active ? "text-accent" : "text-foreground/70"
-                )}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
-        </nav>
+        <NavigationMenu className="hidden xl:block">
+          <NavigationMenuList>
+            {NAV_LINKS.map((item) =>
+              "children" in item ? (
+                <NavigationMenuItem key={item.label}>
+                  <NavigationMenuTrigger
+                    className={
+                      item.children.some((child) => isActive(pathname, child.href))
+                        ? "text-accent"
+                        : "text-foreground/70"
+                    }
+                  >
+                    {item.label}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    {item.children.map((child) => (
+                      <NavigationMenuLink
+                        key={child.href}
+                        render={<Link href={child.href} />}
+                        active={isActive(pathname, child.href)}
+                        closeOnClick
+                        className={cn(
+                          "rounded-md px-3 py-2",
+                          isActive(pathname, child.href)
+                            ? "text-accent"
+                            : "text-foreground/70"
+                        )}
+                      >
+                        {child.label}
+                      </NavigationMenuLink>
+                    ))}
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              ) : (
+                <NavigationMenuItem key={item.href}>
+                  <NavigationMenuLink
+                    render={<Link href={item.href} />}
+                    active={isActive(pathname, item.href)}
+                    className={
+                      isActive(pathname, item.href) ? "text-accent" : "text-foreground/70"
+                    }
+                  >
+                    {item.label}
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              )
+            )}
+          </NavigationMenuList>
+          <NavigationMenuPortal>
+            <NavigationMenuPositioner>
+              <NavigationMenuPopup>
+                <NavigationMenuViewport />
+              </NavigationMenuPopup>
+            </NavigationMenuPositioner>
+          </NavigationMenuPortal>
+        </NavigationMenu>
 
         <Link
           href="/contact"
@@ -73,16 +125,44 @@ export function Navbar() {
 
       {open && (
         <nav className="flex flex-col gap-1 border-t border-border/80 bg-background px-6 py-6 xl:hidden">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="py-3 text-sm font-medium tracking-[0.1em] uppercase text-foreground/80 hover:text-accent"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {NAV_LINKS.map((item) =>
+            "children" in item ? (
+              <div key={item.label} className="py-1">
+                <p className="pt-3 pb-1 text-[11px] font-semibold tracking-[0.15em] text-foreground/40 uppercase">
+                  {item.label}
+                </p>
+                {item.children.map((child) => (
+                  <Link
+                    key={child.href}
+                    href={child.href}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      "block py-2 pl-3 text-sm font-medium tracking-[0.1em] uppercase",
+                      isActive(pathname, child.href)
+                        ? "text-accent"
+                        : "text-foreground/80 hover:text-accent"
+                    )}
+                  >
+                    {child.label}
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className={cn(
+                  "py-3 text-sm font-medium tracking-[0.1em] uppercase",
+                  isActive(pathname, item.href)
+                    ? "text-accent"
+                    : "text-foreground/80 hover:text-accent"
+                )}
+              >
+                {item.label}
+              </Link>
+            )
+          )}
           <Link
             href="/contact"
             onClick={() => setOpen(false)}
