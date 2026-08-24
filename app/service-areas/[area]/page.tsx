@@ -8,7 +8,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SERVICE_AREAS, SERVICES, TRUST_SIGNALS } from "@/lib/constants";
 import { FAQS } from "@/lib/faqs";
-import { FEATURED_TESTIMONIAL } from "@/lib/testimonials";
+import { AREA_FAQS } from "@/lib/area-faqs";
 import { GALLERY_ITEMS } from "@/lib/portfolio";
 
 export const dynamicParams = false;
@@ -44,10 +44,11 @@ export default async function ServiceAreaPage(
   if (!area) notFound();
 
   const areaPhotos = GALLERY_ITEMS.filter((item) => item.area === area.slug);
+  const areaFaqs = [...FAQS, ...(AREA_FAQS[area.slug] ?? [])];
 
   return (
     <>
-      <FaqJsonLd />
+      <FaqJsonLd faqs={areaFaqs} />
 
       <section className="border-b border-border">
         <div className="mx-auto max-w-4xl px-6 py-24 text-center lg:px-10">
@@ -189,19 +190,6 @@ export default async function ServiceAreaPage(
         </section>
       )}
 
-      <section className="border-b border-border">
-        <div className="mx-auto flex max-w-3xl flex-col items-center gap-8 px-6 py-24 text-center lg:px-10">
-          <blockquote>
-            <p className="font-heading text-xl leading-relaxed text-foreground sm:text-2xl">
-              &ldquo;{FEATURED_TESTIMONIAL.quote}&rdquo;
-            </p>
-            <footer className="mt-6 text-xs font-medium tracking-[0.15em] text-accent uppercase">
-              {FEATURED_TESTIMONIAL.author} — {FEATURED_TESTIMONIAL.detail}
-            </footer>
-          </blockquote>
-        </div>
-      </section>
-
       <section>
         <div className="mx-auto max-w-4xl px-6 py-24 lg:px-10">
           <div className="mx-auto max-w-2xl text-center">
@@ -214,7 +202,7 @@ export default async function ServiceAreaPage(
           </div>
 
           <div className="mt-16 flex flex-col divide-y divide-border">
-            {FAQS.map((faq) => (
+            {areaFaqs.map((faq) => (
               <div key={faq.question} className="py-8 first:pt-0 last:pb-0">
                 <h3 className="font-heading text-lg text-foreground sm:text-xl">
                   {faq.question}

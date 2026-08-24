@@ -28,6 +28,6 @@ export const FAQS: Faq[] = [
   {
     question: "What areas do you serve, and what's a typical project budget?",
     answer:
-      "We serve the greater Las Vegas Valley, including Summerlin, Summerlin North, Peccole Ranch, The Lakes, Queensridge, and surrounding communities. Most of the projects we design for fall between $50,000 and $300,000+ in total construction investment — reach out for a consultation regardless of where your project falls in that range.",
+      "We serve the greater Las Vegas Valley — reach out for a consultation regardless of which neighborhood your project is in. Most of the projects we design for fall between $50,000 and $300,000+ in total construction investment, though we're happy to talk through smaller or larger scopes too.",
   },
 ];

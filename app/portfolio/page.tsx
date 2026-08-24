@@ -59,6 +59,10 @@ export default function PortfolioPage() {
               backyard — built by the client&apos;s own licensed contractors
               under our design oversight.
             </p>
+            <p className="mt-2 text-xs text-muted-foreground">
+              All renderings shown are original work produced in-house for
+              this project.
+            </p>
           </div>
 
           <div className="mt-16">
@@ -123,6 +127,10 @@ export default function PortfolioPage() {
           <h2 className="mt-4 font-heading text-3xl text-foreground sm:text-4xl">
             Concept Renderings
           </h2>
+          <p className="mt-4 text-xs text-muted-foreground">
+            All renderings below are original concept work by Vegas Hardscape
+            Design, not stock imagery.
+          </p>
         </div>
 
         <div className="mt-16">

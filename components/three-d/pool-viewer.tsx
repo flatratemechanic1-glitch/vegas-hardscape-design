@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useLayoutEffect } from "react";
+import Image from "next/image";
 import { Canvas, useThree } from "@react-three/fiber";
 import { Loader, OrbitControls, Stage, useGLTF, useTexture } from "@react-three/drei";
 import * as THREE from "three";
@@ -122,7 +123,18 @@ const CAMERA_POSITION: [number, number, number] = [140, 230, 660];
 export function PoolViewer() {
   return (
     <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-border bg-secondary/30">
-      <Canvas camera={{ position: CAMERA_POSITION, fov: 45, near: 1, far: 5000 }} shadows dpr={[1, 1.5]}>
+      <Image
+        src="/portfolio/featured-01-concept-render.jpg"
+        alt=""
+        fill
+        className="object-cover"
+      />
+      <Canvas
+        camera={{ position: CAMERA_POSITION, fov: 45, near: 1, far: 5000 }}
+        shadows
+        dpr={[1, 1.5]}
+        gl={{ alpha: true }}
+      >
         <Suspense fallback={null}>
           <Stage environment="apartment" intensity={0.9} shadows="contact" adjustCamera={false}>
             <PoolModel />
@@ -139,7 +151,7 @@ export function PoolViewer() {
           maxPolarAngle={Math.PI / 2.1}
         />
       </Canvas>
-      <Loader />
+      <Loader containerStyles={{ background: "rgba(23,23,23,0.55)" }} />
     </div>
   );
 }

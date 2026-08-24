@@ -13,7 +13,7 @@ import { FEATURED_TESTIMONIAL } from "@/lib/testimonials";
 // any page that doesn't set its own metadata.
 export const metadata: Metadata = {
   title: {
-    absolute: "Las Vegas Hardscape & Pool Design | Vegas Hardscape Design",
+    absolute: "Custom Hardscape & Pool Design | Vegas Hardscape Design",
   },
   description:
     "Custom hardscape and pool design, photorealistic 3D renderings, and owner's rep consulting for luxury homes in Las Vegas and Summerlin.",
