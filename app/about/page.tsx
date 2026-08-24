@@ -62,7 +62,7 @@ export default function AboutPage() {
               He advocates for your design intent from the first shovel to
               the final walkthrough — all without ever performing the
               physical work himself. Construction is always carried out by
-              your own licensed, insured Nevada contractors.
+              licensed, insured Nevada contractors.
             </p>
           </div>
 
