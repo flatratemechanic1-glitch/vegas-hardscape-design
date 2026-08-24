@@ -10,25 +10,23 @@ import type { Faq } from "@/lib/faqs";
 export const AREA_FAQS: Record<string, Faq[]> = {
   summerlin: [
     {
-      question: "Does a Summerlin HOA need to approve pool or hardscape plans?",
+      question: "Which Summerlin HOA governs my pool or hardscape project?",
       answer:
-        "Most of Summerlin's 30+ villages are governed by their own HOA or sub-association, and many require architectural review before pool, patio, or hardscape work begins. We prepare fully dimensioned plans and renderings in a format ready for that submittal, so approval doesn't stall your project.",
+        "Summerlin is split into three master associations — Summerlin West, Summerlin North, and Summerlin South — each with its own published Design Review Guidelines and Design Review Committee. Regardless of which village you're in, pool, patio, and hardscape work generally needs to be submitted as an Improvement Request with dimensioned drawings before construction begins. We prepare every design in that submittal-ready format from the start.",
     },
   ],
   "summerlin-north": [
     {
-      question:
-        "We're in a guard-gated section like Willow Creek — does that change the design process?",
+      question: "What does Summerlin North's HOA require for a new pool?",
       answer:
-        "Guard-gated and age-restricted communities in Summerlin North, including Willow Creek and Regency at Summerlin, often sit alongside decades of mature, established landscaping. We design with that context in mind and provide submittal-ready plans for your HOA's approval process.",
+        "Per Summerlin North's published Design Guidelines, a pool's water's edge must stay at least three (3) feet from all property lines, construction must meet City and County building codes, and equipment must be screened from view. The Association's CC&Rs allow up to 30 business days to respond to an Improvement Request submittal, though actual review is often faster. We design to these standards and prepare submittal-ready plans so approval isn't the bottleneck.",
     },
   ],
   "summerlin-south": [
     {
-      question:
-        "How does the design process work for a custom estate in The Ridges?",
+      question: "What does Summerlin South's HOA require for a new pool?",
       answer:
-        "Custom-estate communities like The Ridges typically carry architectural guidelines beyond a standard HOA review. We produce fully dimensioned, photorealistic plans suited for that higher level of design scrutiny, so your submittal accurately reflects the finished product.",
+        "Per Summerlin South's published Design Guidelines, a pool's water's edge must stay at least three (3) feet from all property lines, and pool construction access isn't permitted through Association common walls. Typical Improvement Request submittals take about 10-15 business days to process. We design to these standards and prepare submittal-ready plans so approval isn't the bottleneck.",
     },
   ],
   "peccole-ranch": [
