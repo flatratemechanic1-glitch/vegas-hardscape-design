@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools/fire-pit-calculator",
     "/backyard-prep-kit",
     "/plants",
+    "/bid-review",
     "/about",
     "/contact",
   ];

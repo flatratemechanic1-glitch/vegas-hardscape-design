@@ -141,6 +141,7 @@ export const NAV_LINKS: readonly NavItem[] = [
       { href: "/plants", label: "Desert Plants" },
     ],
   },
+  { href: "/bid-review", label: "Bid Review" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ] as const;
@@ -195,6 +196,20 @@ export const ALLOWED_PHOTO_MIME_TYPES = [
   "image/webp",
 ] as const;
 
+// Bid Review checkout — flat-fee paid service. Price is defined once here so
+// the Stripe Checkout Session's unit_amount and on-page display copy can't
+// drift apart. File limits follow the same "stay under Vercel's ~4.5MB
+// serverless request body cap" reasoning as the photo constants above.
+export const BID_REVIEW_PRICE_DISPLAY = "$249";
+export const BID_REVIEW_PRICE_CENTS = 24900;
+export const MAX_BID_FILE_BYTES = 4 * 1024 * 1024;
+export const BID_REVIEW_ALLOWED_MIME_TYPES = [
+  "application/pdf",
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+] as const;
+
 export const SERVICES: Service[] = [
   {
     slug: "hardscape-pool-design",
@@ -219,5 +234,13 @@ export const SERVICES: Service[] = [
       "Independent oversight of your licensed, insured contractors — protecting your design intent, timeline, and budget from groundbreaking to final walkthrough.",
     description:
       "As your owner's representative, we review bids, translate design intent for your contractors, track progress against the plan, and flag deviations before they become costly change orders. We do not perform construction — we protect it, on your behalf, as an independent advocate.",
+  },
+  {
+    slug: "bid-review",
+    title: "Contractor Bid Review",
+    summary:
+      "A flat-fee, unbiased second opinion on a contractor's bid — available nationwide, no design engagement required.",
+    description:
+      "Upload a contractor's bid and get back a written review: whether the pricing lines up with market rates, what scope gaps or vague line items to watch for, red flags worth raising, and specific questions to ask before you sign. Since we're never paid by the contractors we review, the read is entirely in your corner. Available to homeowners anywhere, not just the Las Vegas Valley.",
   },
 ];

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Compass, PenTool, ShieldCheck } from "lucide-react";
+import { Compass, FileSearch, PenTool, ShieldCheck } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { FaqJsonLd } from "@/components/seo/faq-jsonld";
 import { cn } from "@/lib/utils";
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
 };
 
-const SERVICE_ICONS = [PenTool, Compass, ShieldCheck];
+const SERVICE_ICONS = [PenTool, Compass, ShieldCheck, FileSearch];
 
 export default function ServicesPage() {
   return (

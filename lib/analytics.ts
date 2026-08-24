@@ -32,3 +32,15 @@ export function trackToolUsed(tool: string) {
 export function trackPlantsQuoteRequested(plantCount: number) {
   window.gtag?.("event", "plants_quote_requested", { plant_count: plantCount });
 }
+
+// GA4's recommended event name for a completed purchase — fires once the
+// paid bid-review upload form is successfully submitted (after Stripe
+// Checkout has already confirmed payment), so this revenue funnel is
+// trackable end to end alongside the free-lead events above.
+export function trackBidReviewSubmitted() {
+  window.gtag?.("event", "purchase", {
+    currency: "USD",
+    value: 249,
+    items: [{ item_name: "Contractor Bid Review" }],
+  });
+}

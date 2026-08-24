@@ -67,7 +67,7 @@ export default function Home() {
         </div>
 
         <div className="mt-16 grid gap-12 md:grid-cols-3 md:gap-8">
-          {SERVICES.map((service, i) => {
+          {SERVICES.slice(0, 3).map((service, i) => {
             const Icon = SERVICE_ICONS[i];
             return (
               <div key={service.slug} className="flex flex-col gap-4">
