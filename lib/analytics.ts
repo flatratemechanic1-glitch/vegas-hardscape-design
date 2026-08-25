@@ -1,14 +1,18 @@
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
+    fbq?: (...args: unknown[]) => void;
   }
 }
 
 // GA4's recommended event name for a completed contact/quote request.
 // `form` distinguishes the homepage quick-form from the full /contact page
 // form so conversion rate can be compared between the two.
+// Also fires Meta's standard "Lead" event so retargeting/lookalike audiences
+// build from both channels' tracking in lockstep.
 export function trackLeadSubmitted(form: "hero" | "contact_page") {
   window.gtag?.("event", "generate_lead", { form });
+  window.fbq?.("track", "Lead", { content_name: form });
 }
 
 // GA4's enhanced measurement only auto-tracks outbound clicks to other
@@ -37,10 +41,17 @@ export function trackPlantsQuoteRequested(plantCount: number) {
 // paid bid-review upload form is successfully submitted (after Stripe
 // Checkout has already confirmed payment), so this revenue funnel is
 // trackable end to end alongside the free-lead events above.
+// Also fires Meta's standard "Purchase" event for the same reason as
+// trackLeadSubmitted above.
 export function trackBidReviewSubmitted() {
   window.gtag?.("event", "purchase", {
     currency: "USD",
     value: 249,
     items: [{ item_name: "Contractor Bid Review" }],
+  });
+  window.fbq?.("track", "Purchase", {
+    currency: "USD",
+    value: 249,
+    content_name: "Contractor Bid Review",
   });
 }
