@@ -176,7 +176,7 @@ export default async function BidReviewPage({
       </section>
 
       <section className="border-t border-border">
-        <div className="mx-auto max-w-3xl px-6 py-24 lg:px-10">
+        <div className="mx-auto max-w-3xl px-6 pt-24 pb-16 lg:px-10">
           <div className="text-center">
             <p className="text-xs font-medium tracking-[0.3em] text-accent uppercase">
               See A Sample
@@ -333,8 +333,15 @@ export default async function BidReviewPage({
         </div>
       </section>
 
-      <section id="get-started" className="mx-auto max-w-4xl scroll-mt-8 px-6 py-24 text-center lg:px-10">
-        <div className="mx-auto max-w-md rounded-sm border border-border bg-secondary/40 p-8 text-left">
+      <section id="get-started" className="mx-auto max-w-4xl scroll-mt-8 px-6 pt-16 pb-24 text-center lg:px-10">
+        <p className="text-xs font-medium tracking-[0.3em] text-accent uppercase">
+          Get Started
+        </p>
+        <h2 className="mt-4 font-heading text-3xl text-foreground sm:text-4xl">
+          Get Your Bid Reviewed
+        </h2>
+
+        <div className="mx-auto mt-10 max-w-md rounded-sm border border-border bg-secondary/40 p-8 text-left">
           <p className="text-xs font-medium tracking-[0.15em] text-foreground/60 uppercase">
             What you get
           </p>
