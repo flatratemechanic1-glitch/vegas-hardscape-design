@@ -6,7 +6,7 @@ import { CONTACT_EMAIL } from "@/lib/constants";
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
   const signature = request.headers.get("stripe-signature");
 
   if (!webhookSecret || !signature) {
