@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { AlertTriangle, Check, FileSearch, Lock } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { AlertTriangle, Check, FileSearch, Lock, ShieldCheck } from "lucide-react";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { FaqJsonLd } from "@/components/seo/faq-jsonld";
+import { cn } from "@/lib/utils";
 import {
   BID_REVIEW_GUARANTEE_DISPLAY,
   BID_REVIEW_PRICE_DISPLAY,
@@ -173,7 +175,7 @@ export default async function BidReviewPage({
         </div>
       </section>
 
-      <section className="mx-auto max-w-4xl px-6 py-24 text-center lg:px-10">
+      <section id="get-started" className="mx-auto max-w-4xl scroll-mt-8 px-6 py-24 text-center lg:px-10">
         <div className="mx-auto max-w-md rounded-sm border border-border bg-secondary/40 p-8 text-left">
           <p className="text-xs font-medium tracking-[0.15em] text-foreground/60 uppercase">
             What you get
@@ -194,8 +196,12 @@ export default async function BidReviewPage({
             </span>
           </p>
           <p className="mt-2 text-sm text-muted-foreground">
-            Reviewed within {BID_REVIEW_TURNAROUND_DISPLAY}. {BID_REVIEW_GUARANTEE_DISPLAY}
+            Reviewed within {BID_REVIEW_TURNAROUND_DISPLAY}.
           </p>
+          <div className="mt-4 flex items-start gap-2.5 rounded-sm border border-accent/30 bg-accent/5 px-4 py-3 text-left">
+            <ShieldCheck className="mt-0.5 size-4 shrink-0 text-accent" strokeWidth={2} />
+            <p className="text-sm text-foreground">{BID_REVIEW_GUARANTEE_DISPLAY}</p>
+          </div>
 
           <form action="/api/bid-review/checkout" method="POST" className="mt-6 space-y-4">
             <div aria-hidden="true" className="absolute left-[-9999px] h-px w-px overflow-hidden">
@@ -257,8 +263,9 @@ export default async function BidReviewPage({
             </Button>
           </form>
           <p className="mt-3 text-center text-xs text-muted-foreground/80">
-            Secure checkout via Stripe. Full refund if we don&apos;t find
-            anything actionable. You&apos;ll upload your bid after payment.
+            Secure checkout via Stripe. You&apos;ll upload your bid after
+            payment. Reviewed personally by Reggie — not automated, not
+            outsourced.
           </p>
         </div>
       </section>
@@ -395,14 +402,22 @@ export default async function BidReviewPage({
                 ))}
               </ul>
 
-              <p className="mt-6 border-t border-border pt-6 text-sm leading-relaxed text-muted-foreground">
+              <div className="mt-6 flex flex-col items-start gap-2 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
+                <p className="font-heading text-lg text-foreground">
+                  $4,350 in above-range pricing flagged
+                </p>
+                <p className="text-xs font-medium tracking-[0.1em] text-accent uppercase">
+                  ~17x the cost of the review
+                </p>
+              </div>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                 <span className="font-medium text-foreground">Bottom line: </span>
-                Three items worth resolving before signing — the paver
+                Four items worth resolving before signing — the paver
                 pricing ($3,100 above range), the retaining wall pricing and
-                engineering ($1,500 above range), and the electrical
-                allowance&apos;s vague scope. The irrigation tie-in comes in
-                $200 below range, and demo and permitting line up with
-                current market rates.
+                engineering ($900 above range), the irrigation tie-in ($350
+                above range), and the electrical allowance&apos;s vague
+                scope. Demo and permitting line up with current market
+                rates.
               </p>
             </div>
           </div>
@@ -436,6 +451,27 @@ export default async function BidReviewPage({
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="border-t border-border bg-secondary/40">
+        <div className="mx-auto max-w-2xl px-6 py-20 text-center lg:px-10">
+          <h2 className="font-heading text-3xl text-foreground sm:text-4xl">
+            Ready To Know What&apos;s Fair?
+          </h2>
+          <p className="mt-4 text-sm text-muted-foreground sm:text-base">
+            A flat {BID_REVIEW_PRICE_DISPLAY}, reviewed within{" "}
+            {BID_REVIEW_TURNAROUND_DISPLAY} — before you sign, not after.
+          </p>
+          <Link
+            href="#get-started"
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "mt-8 h-11 bg-accent px-8 text-sm tracking-wide text-accent-foreground hover:bg-accent/90"
+            )}
+          >
+            Get My Bid Reviewed
+          </Link>
         </div>
       </section>
     </>

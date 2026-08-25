@@ -12,6 +12,11 @@ export const BID_REVIEW_FAQS: Faq[] = [
       "You get a full refund. We'd rather hand back your money than send you a report that just says \"looks fine\" and call it worth $249.",
   },
   {
+    question: "Why not just use an AI tool to check my bid?",
+    answer:
+      "Generic pricing tools compare your bid against scraped, published averages. This review is read and written by someone who actually builds hardscape and landscape projects — pricing judgment and scope-gap flags come from real install experience, not an algorithm, and a person is reading your specific bid, not pattern-matching line items.",
+  },
+  {
     question: "What if my contractor's bid turns out to be fair?",
     answer:
       "Then you'll know that for certain, in writing, instead of guessing — and you can sign with confidence instead of a nagging feeling you overpaid.",
