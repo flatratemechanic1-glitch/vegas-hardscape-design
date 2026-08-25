@@ -50,6 +50,11 @@ export default async function BidReviewUploadPage({
     );
   }
 
+  const name = session.metadata?.name ?? "";
+  const email = session.customer_details?.email ?? session.customer_email ?? "";
+  const phone = session.metadata?.phone ?? "";
+  const notes = session.metadata?.notes ?? "";
+
   return (
     <section className="mx-auto max-w-2xl px-6 py-24 lg:px-10">
       <div className="text-center">
@@ -66,7 +71,13 @@ export default async function BidReviewUploadPage({
       </div>
 
       <div className="mt-12">
-        <BidReviewUploadForm sessionId={session.id} />
+        <BidReviewUploadForm
+          sessionId={session.id}
+          name={name}
+          email={email}
+          phone={phone}
+          notes={notes}
+        />
       </div>
     </section>
   );

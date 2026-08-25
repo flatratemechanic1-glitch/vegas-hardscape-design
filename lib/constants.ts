@@ -210,6 +210,10 @@ export const BID_REVIEW_ALLOWED_MIME_TYPES = [
   "image/webp",
 ] as const;
 
+// Stripe metadata values are capped at 500 characters each — this leaves
+// headroom under that for the "notes" field collected before payment.
+export const BID_REVIEW_NOTES_MAX_LENGTH = 480;
+
 export const SERVICES: Service[] = [
   {
     slug: "hardscape-pool-design",

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Check, FileSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { BID_REVIEW_PRICE_DISPLAY } from "@/lib/constants";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { BID_REVIEW_PRICE_DISPLAY, HONEYPOT_FIELD_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Bid Review",
@@ -19,7 +22,12 @@ const WHAT_YOU_GET = [
   "Specific questions to bring back to your contractor",
 ];
 
-export default function BidReviewPage() {
+export default async function BidReviewPage({
+  searchParams,
+}: PageProps<"/bid-review">) {
+  const { error } = await searchParams;
+  const errorMessage = typeof error === "string" ? error : null;
+
   return (
     <section className="mx-auto max-w-4xl px-6 py-24 text-center lg:px-10">
       <FileSearch className="mx-auto size-10 text-accent" strokeWidth={1.5} />
@@ -31,10 +39,11 @@ export default function BidReviewPage() {
       </h1>
       <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
         We&apos;re never paid by the contractors we review, so the read is
-        entirely in your corner. Upload your bid, and we&apos;ll send back a
-        written review you can bring to the negotiating table — no design
-        engagement required, and available to homeowners anywhere in the
-        country, not just the Las Vegas Valley.
+        entirely in your corner. Tell us about your project, pay the flat
+        fee, and upload your bid — we&apos;ll send back a written review you
+        can bring to the negotiating table. No design engagement required,
+        and available to homeowners anywhere in the country, not just the
+        Las Vegas Valley.
       </p>
 
       <div className="mx-auto mt-12 max-w-md rounded-sm border border-border bg-secondary/40 p-8 text-left">
@@ -57,7 +66,57 @@ export default function BidReviewPage() {
           </span>
         </p>
 
-        <form action="/api/bid-review/checkout" method="POST" className="mt-6">
+        <form action="/api/bid-review/checkout" method="POST" className="mt-6 space-y-4">
+          <div aria-hidden="true" className="absolute left-[-9999px] h-px w-px overflow-hidden">
+            <label htmlFor="bid-review-pitch-website">Website</label>
+            <input
+              id="bid-review-pitch-website"
+              name={HONEYPOT_FIELD_NAME}
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="bid-review-pitch-name">Name</Label>
+            <Input id="bid-review-pitch-name" name="name" required autoComplete="name" />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="bid-review-pitch-email">Email</Label>
+            <Input
+              id="bid-review-pitch-email"
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="bid-review-pitch-phone">Phone (optional)</Label>
+            <Input id="bid-review-pitch-phone" name="phone" type="tel" autoComplete="tel" />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="bid-review-pitch-notes">
+              Anything we should know? (optional)
+            </Label>
+            <Textarea
+              id="bid-review-pitch-notes"
+              name="notes"
+              rows={3}
+              placeholder="Context about the project, specific concerns, timeline, etc."
+            />
+          </div>
+
+          {errorMessage && (
+            <p className="text-sm text-destructive" role="alert">
+              {errorMessage}
+            </p>
+          )}
+
           <Button
             type="submit"
             size="lg"

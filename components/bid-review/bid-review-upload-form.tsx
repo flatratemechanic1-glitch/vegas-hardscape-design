@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import {
   BID_REVIEW_ALLOWED_MIME_TYPES,
   HONEYPOT_FIELD_NAME,
@@ -23,7 +22,21 @@ type BidFile = {
   errorMessage?: string;
 };
 
-export function BidReviewUploadForm({ sessionId }: { sessionId: string }) {
+type BidReviewUploadFormProps = {
+  sessionId: string;
+  name: string;
+  email: string;
+  phone: string;
+  notes: string;
+};
+
+export function BidReviewUploadForm({
+  sessionId,
+  name,
+  email,
+  phone,
+  notes,
+}: BidReviewUploadFormProps) {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -107,7 +120,6 @@ export function BidReviewUploadForm({ sessionId }: { sessionId: string }) {
     setSubmitting(true);
 
     const formData = new FormData(event.currentTarget);
-    formData.set("session_id", sessionId);
     formData.append("bid_file", bidFile.blob, bidFile.filename);
 
     try {
@@ -151,36 +163,15 @@ export function BidReviewUploadForm({ sessionId }: { sessionId: string }) {
               />
             </div>
 
-            <div className="grid gap-6 sm:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="bid-review-name">Name</Label>
-                <Input id="bid-review-name" name="name" required autoComplete="name" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="bid-review-phone">Phone (optional)</Label>
-                <Input id="bid-review-phone" name="phone" type="tel" autoComplete="tel" />
-              </div>
-            </div>
+            <input type="hidden" name="session_id" value={sessionId} />
+            <input type="hidden" name="name" value={name} />
+            <input type="hidden" name="email" value={email} />
+            <input type="hidden" name="phone" value={phone} />
+            <input type="hidden" name="notes" value={notes} />
 
-            <div className="space-y-2">
-              <Label htmlFor="bid-review-email">Email</Label>
-              <Input
-                id="bid-review-email"
-                name="email"
-                type="email"
-                required
-                autoComplete="email"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="bid-review-notes">Anything we should know? (optional)</Label>
-              <Textarea
-                id="bid-review-notes"
-                name="notes"
-                rows={4}
-                placeholder="Context about the project, specific concerns, timeline, etc."
-              />
+            <div className="rounded-sm border border-border bg-secondary/40 p-4 text-sm">
+              <p className="text-foreground">{name}</p>
+              <p className="text-muted-foreground">{email}</p>
             </div>
 
             <div className="space-y-2">
