@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Check, FileSearch } from "lucide-react";
+import { AlertTriangle, Check, FileSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -27,6 +27,65 @@ const WHAT_YOU_GET = [
   "Scope gaps or vague line items to watch for",
   "Red flags worth raising before you sign",
   "Specific questions to bring back to your contractor",
+];
+
+// Illustrative sample only — a fabricated bid built to demonstrate the
+// report format, not an actual client's project.
+const SAMPLE_LINE_ITEMS = [
+  {
+    item: "Travertine paver installation (900 sq ft)",
+    bid: "$18,400",
+    range: "$14-17/sq ft",
+    assessment: "~20-30% above range",
+    flagged: true,
+  },
+  {
+    item: "Pool deck demo & haul-off",
+    bid: "$3,200",
+    range: "$2,800-3,500",
+    assessment: "Typical",
+    flagged: false,
+  },
+  {
+    item: "Electrical for lighting (allowance)",
+    bid: "$2,200",
+    range: "—",
+    assessment: "Vague scope",
+    flagged: true,
+  },
+  {
+    item: "Engineered retaining wall (60 linear ft)",
+    bid: "$9,600",
+    range: "$140-175/ft",
+    assessment: "Typical",
+    flagged: false,
+  },
+  {
+    item: "Irrigation tie-in",
+    bid: "$1,100",
+    range: "$900-1,300",
+    assessment: "Typical",
+    flagged: false,
+  },
+  {
+    item: "Permit & HOA submittal handling",
+    bid: "$850",
+    range: "$500-900",
+    assessment: "Typical",
+    flagged: false,
+  },
+];
+
+const SAMPLE_FINDINGS = [
+  "Pricing: The travertine paver line runs roughly 20-30% above the current Las Vegas Valley market range ($14-17/sq ft including base prep). Ask for a materials and labor breakdown before agreeing to it.",
+  "Scope gap: “Electrical for lighting” is a single $2,200 allowance with no fixture count, wattage, or trenching detail. Vague allowances like this are one of the most common places change orders show up later.",
+  "Engineering: The retaining wall line doesn’t say whether a stamped engineering review is included at this height, or billed separately — confirm before assuming it’s covered.",
+];
+
+const SAMPLE_QUESTIONS = [
+  "Can you break the electrical allowance down by fixture count, wattage, and trenching instead of one lump sum?",
+  "What's driving the per-square-foot premium on the paver install compared to the current market range — material grade, base prep, or something else?",
+  "Is a stamped engineering review included for the retaining wall at this height, or is that billed separately?",
 ];
 
 export default async function BidReviewPage({
@@ -186,7 +245,7 @@ export default async function BidReviewPage({
       </section>
 
       <section className="border-t border-border">
-        <div className="mx-auto max-w-2xl px-6 py-24 lg:px-10">
+        <div className="mx-auto max-w-3xl px-6 py-24 lg:px-10">
           <div className="text-center">
             <p className="text-xs font-medium tracking-[0.3em] text-accent uppercase">
               See A Sample
@@ -196,24 +255,118 @@ export default async function BidReviewPage({
             </h2>
           </div>
 
-          <div className="mt-10 rounded-sm border border-border bg-secondary/40 p-6 text-left text-sm leading-relaxed text-foreground sm:text-base">
-            <p>
-              <span className="font-medium text-accent">Pricing:</span> Your
-              bid lists $18,400 for 900 sq ft of travertine paver
-              installation ($20.44/sq ft). Current Las Vegas Valley market
-              range for travertine pavers, including base prep, typically
-              runs $14-17/sq ft. This line is roughly 20-30% above the
-              typical range — worth asking for a materials and labor
-              breakdown before agreeing to it.
-            </p>
-            <p className="mt-4">
-              <span className="font-medium text-accent">Scope gap:</span> The
-              bid includes &ldquo;electrical for lighting&rdquo; as a single
-              $2,200 line item with no fixture count, wattage, or trenching
-              detail specified. Get this itemized before signing — vague
-              electrical allowances are one of the most common places change
-              orders show up later.
-            </p>
+          <div className="mt-10 overflow-hidden rounded-sm border border-border bg-card text-left">
+            <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border bg-secondary/40 px-6 py-5">
+              <div>
+                <p className="text-xs font-medium tracking-[0.15em] text-accent uppercase">
+                  Bid Review Report
+                </p>
+                <p className="mt-1 font-heading text-lg text-foreground">
+                  Backyard Hardscape &amp; Pool Deck Renovation
+                </p>
+              </div>
+              <p className="text-right text-xs text-muted-foreground">
+                Prepared by
+                <br />
+                Vegas Hardscape Design
+              </p>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[560px] text-left text-sm">
+                <thead>
+                  <tr className="border-b border-border text-xs tracking-wide text-muted-foreground uppercase">
+                    <th scope="col" className="px-6 py-3 font-medium">
+                      Line Item
+                    </th>
+                    <th scope="col" className="px-4 py-3 font-medium">
+                      Bid
+                    </th>
+                    <th scope="col" className="px-4 py-3 font-medium">
+                      Market Range
+                    </th>
+                    <th scope="col" className="px-6 py-3 font-medium">
+                      Assessment
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {SAMPLE_LINE_ITEMS.map((row) => (
+                    <tr key={row.item}>
+                      <td className="px-6 py-4 align-top text-foreground">{row.item}</td>
+                      <td className="px-4 py-4 align-top whitespace-nowrap text-foreground">
+                        {row.bid}
+                      </td>
+                      <td className="px-4 py-4 align-top whitespace-nowrap text-muted-foreground">
+                        {row.range}
+                      </td>
+                      <td className="px-6 py-4 align-top whitespace-nowrap">
+                        <span
+                          className={
+                            row.flagged
+                              ? "inline-flex items-center gap-1.5 text-accent"
+                              : "inline-flex items-center gap-1.5 text-muted-foreground"
+                          }
+                        >
+                          {row.flagged ? (
+                            <AlertTriangle className="size-3.5 shrink-0" strokeWidth={2} />
+                          ) : (
+                            <Check className="size-3.5 shrink-0" strokeWidth={2} />
+                          )}
+                          {row.assessment}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr className="border-t border-border">
+                    <td className="px-6 py-4 font-medium text-foreground">Total Bid</td>
+                    <td className="px-4 py-4 font-medium whitespace-nowrap text-foreground">
+                      $35,350
+                    </td>
+                    <td colSpan={2}></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <div className="border-t border-border px-6 py-6">
+              <p className="text-xs font-medium tracking-[0.15em] text-foreground/60 uppercase">
+                Findings
+              </p>
+              <ul className="mt-3 space-y-3">
+                {SAMPLE_FINDINGS.map((finding) => (
+                  <li key={finding} className="flex items-start gap-3 text-sm text-foreground">
+                    <AlertTriangle
+                      className="mt-0.5 size-4 shrink-0 text-accent"
+                      strokeWidth={2}
+                    />
+                    {finding}
+                  </li>
+                ))}
+              </ul>
+
+              <p className="mt-6 text-xs font-medium tracking-[0.15em] text-foreground/60 uppercase">
+                Questions To Bring To Your Contractor
+              </p>
+              <ul className="mt-3 space-y-3">
+                {SAMPLE_QUESTIONS.map((question) => (
+                  <li key={question} className="flex items-start gap-3 text-sm text-foreground">
+                    <Check className="mt-0.5 size-4 shrink-0 text-accent" strokeWidth={2} />
+                    {question}
+                  </li>
+                ))}
+              </ul>
+
+              <p className="mt-6 border-t border-border pt-6 text-sm leading-relaxed text-muted-foreground">
+                <span className="font-medium text-foreground">Bottom line: </span>
+                Two pricing and scope items worth resolving before signing
+                (the paver pricing and the electrical allowance), plus one
+                clarification on engineering. Demo, irrigation, and
+                permitting all line up with current market rates.
+              </p>
+            </div>
           </div>
           <p className="mt-4 text-center text-xs text-muted-foreground/80">
             Illustrative example built from typical bid patterns — not an
