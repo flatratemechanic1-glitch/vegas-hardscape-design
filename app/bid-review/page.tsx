@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AlertTriangle, Check, FileSearch } from "lucide-react";
+import { AlertTriangle, Check, FileSearch, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -30,13 +30,16 @@ const WHAT_YOU_GET = [
 ];
 
 // Illustrative sample only — a fabricated bid built to demonstrate the
-// report format, not an actual client's project.
+// report format, not an actual client's project. Market-range figures are
+// blurred in the rendered table (see the `range` cell below) so the page
+// shows the shape of the findings without giving away the benchmark data
+// that's part of what a customer pays for.
 const SAMPLE_LINE_ITEMS = [
   {
     item: "Travertine paver installation (900 sq ft)",
     bid: "$18,400",
     range: "$14-17/sq ft",
-    assessment: "~20-30% above range",
+    assessment: "Above range",
     flagged: true,
   },
   {
@@ -55,17 +58,17 @@ const SAMPLE_LINE_ITEMS = [
   },
   {
     item: "Engineered retaining wall (60 linear ft)",
-    bid: "$9,600",
+    bid: "$11,400",
     range: "$140-175/ft",
-    assessment: "Typical",
-    flagged: false,
+    assessment: "Above range",
+    flagged: true,
   },
   {
     item: "Irrigation tie-in",
-    bid: "$1,100",
+    bid: "$1,650",
     range: "$900-1,300",
-    assessment: "Typical",
-    flagged: false,
+    assessment: "Above range",
+    flagged: true,
   },
   {
     item: "Permit & HOA submittal handling",
@@ -76,16 +79,20 @@ const SAMPLE_LINE_ITEMS = [
   },
 ];
 
+const SAMPLE_TOTAL_BID = "$37,700";
+
 const SAMPLE_FINDINGS = [
-  "Pricing: The travertine paver line runs roughly 20-30% above the current Las Vegas Valley market range ($14-17/sq ft including base prep). Ask for a materials and labor breakdown before agreeing to it.",
+  "Pricing: The travertine paver line comes in well above the current Las Vegas Valley market range for this size and material — your paid review shows exactly how much, and what a fair range looks like.",
+  "Pricing: The engineered retaining wall's per-foot rate also runs above the typical range for this length and height, and it's not clear whether a stamped engineering review is included, or billed separately.",
+  "Pricing: The irrigation tie-in is priced above what's typical for a straightforward tie-in of this scope — worth asking what's driving the difference.",
   "Scope gap: “Electrical for lighting” is a single $2,200 allowance with no fixture count, wattage, or trenching detail. Vague allowances like this are one of the most common places change orders show up later.",
-  "Engineering: The retaining wall line doesn’t say whether a stamped engineering review is included at this height, or billed separately — confirm before assuming it’s covered.",
 ];
 
 const SAMPLE_QUESTIONS = [
   "Can you break the electrical allowance down by fixture count, wattage, and trenching instead of one lump sum?",
-  "What's driving the per-square-foot premium on the paver install compared to the current market range — material grade, base prep, or something else?",
+  "What's driving the per-square-foot premium on the paver install compared to current market rates — material grade, base prep, or something else?",
   "Is a stamped engineering review included for the retaining wall at this height, or is that billed separately?",
+  "What's included in the irrigation tie-in that justifies the price relative to similar scope work?",
 ];
 
 export default async function BidReviewPage({
@@ -114,6 +121,18 @@ export default async function BidReviewPage({
           and available to homeowners anywhere in the country, not just the
           Las Vegas Valley.
         </p>
+      </section>
+
+      <section className="bg-foreground">
+        <div className="mx-auto max-w-2xl px-6 py-16 text-center lg:px-10">
+          <p className="font-heading text-3xl text-background sm:text-5xl">
+            Don&apos;t Ever Overpay For Your Backyard Project.
+          </p>
+          <p className="mt-4 text-sm text-background/70 sm:text-base">
+            This one small investment — a flat {BID_REVIEW_PRICE_DISPLAY} —
+            could save you thousands.
+          </p>
+        </div>
       </section>
 
       <section className="border-t border-border bg-secondary/40">
@@ -283,7 +302,10 @@ export default async function BidReviewPage({
                       Bid
                     </th>
                     <th scope="col" className="px-4 py-3 font-medium">
-                      Market Range
+                      <span className="inline-flex items-center gap-1.5">
+                        Market Range
+                        <Lock className="size-3 shrink-0" strokeWidth={2} />
+                      </span>
                     </th>
                     <th scope="col" className="px-6 py-3 font-medium">
                       Assessment
@@ -298,7 +320,16 @@ export default async function BidReviewPage({
                         {row.bid}
                       </td>
                       <td className="px-4 py-4 align-top whitespace-nowrap text-muted-foreground">
-                        {row.range}
+                        {row.range === "—" ? (
+                          row.range
+                        ) : (
+                          <span
+                            className="pointer-events-none blur-[4px] select-none"
+                            aria-hidden="true"
+                          >
+                            {row.range}
+                          </span>
+                        )}
                       </td>
                       <td className="px-6 py-4 align-top whitespace-nowrap">
                         <span
@@ -323,13 +354,18 @@ export default async function BidReviewPage({
                   <tr className="border-t border-border">
                     <td className="px-6 py-4 font-medium text-foreground">Total Bid</td>
                     <td className="px-4 py-4 font-medium whitespace-nowrap text-foreground">
-                      $35,350
+                      {SAMPLE_TOTAL_BID}
                     </td>
                     <td colSpan={2}></td>
                   </tr>
                 </tfoot>
               </table>
             </div>
+            <p className="border-t border-border px-6 py-3 text-xs text-muted-foreground/80">
+              <Lock className="mr-1.5 inline size-3" strokeWidth={2} />
+              Market-rate benchmarks are blurred here — they&apos;re included
+              in full in your paid review.
+            </p>
 
             <div className="border-t border-border px-6 py-6">
               <p className="text-xs font-medium tracking-[0.15em] text-foreground/60 uppercase">
@@ -361,10 +397,11 @@ export default async function BidReviewPage({
 
               <p className="mt-6 border-t border-border pt-6 text-sm leading-relaxed text-muted-foreground">
                 <span className="font-medium text-foreground">Bottom line: </span>
-                Two pricing and scope items worth resolving before signing
-                (the paver pricing and the electrical allowance), plus one
-                clarification on engineering. Demo, irrigation, and
-                permitting all line up with current market rates.
+                Four pricing and scope items worth resolving before signing —
+                the paver pricing, the retaining wall pricing and
+                engineering, the irrigation pricing, and the electrical
+                allowance. Demo and permitting line up with current market
+                rates.
               </p>
             </div>
           </div>
