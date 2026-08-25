@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -129,6 +130,12 @@ export function HeroContactForm() {
           >
             {submitting ? "Sending..." : "Request a Consultation"}
           </Button>
+
+          <p className="text-center text-xs text-muted-foreground">
+            <Link href="/bid-review" className="font-medium text-accent hover:underline">
+              Don&apos;t overpay. Get your bid reviewed.
+            </Link>
+          </p>
         </form>
       )}
     </div>
