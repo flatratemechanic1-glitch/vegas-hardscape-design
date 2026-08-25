@@ -39,7 +39,7 @@ const SAMPLE_LINE_ITEMS = [
     item: "Travertine paver installation (900 sq ft)",
     bid: "$18,400",
     range: "$14-17/sq ft",
-    assessment: "Above range",
+    assessment: "$3,100 above range",
     flagged: true,
   },
   {
@@ -58,17 +58,17 @@ const SAMPLE_LINE_ITEMS = [
   },
   {
     item: "Engineered retaining wall (60 linear ft)",
-    bid: "$11,400",
+    bid: "$12,000",
     range: "$140-175/ft",
-    assessment: "Above range",
+    assessment: "$1,500 above range",
     flagged: true,
   },
   {
     item: "Irrigation tie-in",
-    bid: "$1,650",
+    bid: "$700",
     range: "$900-1,300",
-    assessment: "Above range",
-    flagged: true,
+    assessment: "$200 below range",
+    flagged: false,
   },
   {
     item: "Permit & HOA submittal handling",
@@ -79,20 +79,20 @@ const SAMPLE_LINE_ITEMS = [
   },
 ];
 
-const SAMPLE_TOTAL_BID = "$37,700";
+const SAMPLE_TOTAL_BID = "$37,350";
 
 const SAMPLE_FINDINGS = [
-  "Pricing: The travertine paver line comes in well above the current Las Vegas Valley market range for this size and material — your paid review shows exactly how much, and what a fair range looks like.",
-  "Pricing: The engineered retaining wall's per-foot rate also runs above the typical range for this length and height, and it's not clear whether a stamped engineering review is included, or billed separately.",
-  "Pricing: The irrigation tie-in is priced above what's typical for a straightforward tie-in of this scope — worth asking what's driving the difference.",
+  "Pricing: The travertine paver line comes in $3,100 above the current Las Vegas Valley market range for this size and material — the full range is in your paid review. Ask for a materials and labor breakdown before agreeing to it.",
+  "Pricing: The engineered retaining wall's per-foot rate runs $1,500 above the typical range for this length and height, and it's not clear whether a stamped engineering review is included, or billed separately.",
+  "Pricing: The irrigation tie-in comes in about $200 below typical range for this scope — good news on price, though worth a quick check that the scope (zone count, fittings) matches a typical tie-in at this price.",
   "Scope gap: “Electrical for lighting” is a single $2,200 allowance with no fixture count, wattage, or trenching detail. Vague allowances like this are one of the most common places change orders show up later.",
 ];
 
 const SAMPLE_QUESTIONS = [
   "Can you break the electrical allowance down by fixture count, wattage, and trenching instead of one lump sum?",
-  "What's driving the per-square-foot premium on the paver install compared to current market rates — material grade, base prep, or something else?",
+  "What's driving the $3,100 premium on the paver install compared to current market rates — material grade, base prep, or something else?",
   "Is a stamped engineering review included for the retaining wall at this height, or is that billed separately?",
-  "What's included in the irrigation tie-in that justifies the price relative to similar scope work?",
+  "Can you confirm the irrigation tie-in's zone count and fittings match a typical setup at this price?",
 ];
 
 export default async function BidReviewPage({
@@ -397,11 +397,12 @@ export default async function BidReviewPage({
 
               <p className="mt-6 border-t border-border pt-6 text-sm leading-relaxed text-muted-foreground">
                 <span className="font-medium text-foreground">Bottom line: </span>
-                Four pricing and scope items worth resolving before signing —
-                the paver pricing, the retaining wall pricing and
-                engineering, the irrigation pricing, and the electrical
-                allowance. Demo and permitting line up with current market
-                rates.
+                Three items worth resolving before signing — the paver
+                pricing ($3,100 above range), the retaining wall pricing and
+                engineering ($1,500 above range), and the electrical
+                allowance&apos;s vague scope. The irrigation tie-in comes in
+                $200 below range, and demo and permitting line up with
+                current market rates.
               </p>
             </div>
           </div>
