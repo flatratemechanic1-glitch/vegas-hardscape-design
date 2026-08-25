@@ -4,7 +4,14 @@ import { Compass, PenTool, ShieldCheck } from "lucide-react";
 import { Hero } from "@/components/home/hero";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { GOOGLE_BUSINESS_PROFILE_URL, SERVICES, TRUST_SIGNALS } from "@/lib/constants";
+import {
+  BID_REVIEW_GUARANTEE_DISPLAY,
+  BID_REVIEW_PRICE_DISPLAY,
+  BID_REVIEW_TURNAROUND_DISPLAY,
+  GOOGLE_BUSINESS_PROFILE_URL,
+  SERVICES,
+  TRUST_SIGNALS,
+} from "@/lib/constants";
 import { FEATURED_TESTIMONIAL } from "@/lib/testimonials";
 
 // Overrides the root layout's long, tagline-based title/description with a
@@ -116,6 +123,33 @@ export default function Home() {
           >
             Read Our Google Review
           </a>
+        </div>
+      </section>
+
+      <section className="border-t border-border">
+        <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 py-24 text-center lg:px-10">
+          <p className="text-xs font-medium tracking-[0.3em] text-accent uppercase">
+            Bid Review
+          </p>
+          <h2 className="font-heading text-3xl text-foreground sm:text-4xl">
+            Got A Bid You Can&apos;t Make Sense Of?
+          </h2>
+          <p className="max-w-xl text-sm text-muted-foreground sm:text-base">
+            Contractor quotes for the same scope of work can vary by
+            multiples, with no way to tell what&apos;s fair from the paper
+            alone. Upload your bid and get back an independent, written
+            review — pricing sanity check, scope gaps, and red flags — for a
+            flat {BID_REVIEW_PRICE_DISPLAY}, no design engagement required.
+          </p>
+          <p className="text-xs font-medium tracking-[0.15em] text-muted-foreground uppercase">
+            Reviewed within {BID_REVIEW_TURNAROUND_DISPLAY} · {BID_REVIEW_GUARANTEE_DISPLAY}
+          </p>
+          <Link
+            href="/bid-review"
+            className={cn(buttonVariants({ size: "lg" }), "h-11 px-8 text-sm tracking-wide")}
+          >
+            Get Your Bid Reviewed
+          </Link>
         </div>
       </section>
     </>

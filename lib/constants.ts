@@ -202,6 +202,9 @@ export const ALLOWED_PHOTO_MIME_TYPES = [
 // serverless request body cap" reasoning as the photo constants above.
 export const BID_REVIEW_PRICE_DISPLAY = "$249";
 export const BID_REVIEW_PRICE_CENTS = 24900;
+export const BID_REVIEW_TURNAROUND_DISPLAY = "1-2 business days";
+export const BID_REVIEW_GUARANTEE_DISPLAY =
+  "If we don't find anything actionable, you get a full refund.";
 export const MAX_BID_FILE_BYTES = 4 * 1024 * 1024;
 export const BID_REVIEW_ALLOWED_MIME_TYPES = [
   "application/pdf",
@@ -245,6 +248,6 @@ export const SERVICES: Service[] = [
     summary:
       "A flat-fee, unbiased second opinion on a contractor's bid — available nationwide, no design engagement required.",
     description:
-      "Upload a contractor's bid and get back a written review: whether the pricing lines up with market rates, what scope gaps or vague line items to watch for, red flags worth raising, and specific questions to ask before you sign. Since we're never paid by the contractors we review, the read is entirely in your corner. Available to homeowners anywhere, not just the Las Vegas Valley.",
+      "Upload a contractor's bid and get back a written review within 1-2 business days: whether the pricing lines up with market rates, what scope gaps or vague line items to watch for, red flags worth raising, and specific questions to ask before you sign. If we don't find anything actionable, you get a full refund. Since we're never paid by the contractors we review, the read is entirely in your corner. Available to homeowners anywhere, not just the Las Vegas Valley.",
   },
 ];

@@ -4,6 +4,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { stripe } from "@/lib/stripe";
 import { BidReviewUploadForm } from "@/components/bid-review/bid-review-upload-form";
+import { BID_REVIEW_TURNAROUND_DISPLAY } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Upload Your Bid",
@@ -66,7 +67,7 @@ export default async function BidReviewUploadPage({
         </h1>
         <p className="mt-4 text-sm text-muted-foreground">
           Attach the bid document (PDF or a clear photo) and we&apos;ll send
-          your written review shortly.
+          your written review within {BID_REVIEW_TURNAROUND_DISPLAY}.
         </p>
       </div>
 

@@ -2,6 +2,8 @@ import nodemailer from "nodemailer";
 import { stripe } from "@/lib/stripe";
 import {
   BID_REVIEW_ALLOWED_MIME_TYPES,
+  BID_REVIEW_GUARANTEE_DISPLAY,
+  BID_REVIEW_TURNAROUND_DISPLAY,
   CONTACT_EMAIL,
   EMAIL_REGEX,
   HONEYPOT_FIELD_NAME,
@@ -134,6 +136,28 @@ export async function POST(request: Request) {
       { error: "Something went wrong sending your bid. Please contact us directly." },
       { status: 502 }
     );
+  }
+
+  // Best-effort only — the business already has the bid and contact info
+  // above, so a failure here shouldn't fail the customer's request.
+  try {
+    await transporter.sendMail({
+      from: `"Vegas Hardscape Design" <${gmailUser}>`,
+      to: email,
+      replyTo: CONTACT_EMAIL,
+      subject: "We've received your bid — Bid Review confirmation",
+      text: [
+        `Hi ${name},`,
+        "",
+        "We've received your contractor's bid and your payment is confirmed.",
+        `Your written review will be sent to this email address within ${BID_REVIEW_TURNAROUND_DISPLAY}.`,
+        BID_REVIEW_GUARANTEE_DISPLAY,
+        "",
+        "Questions in the meantime? Just reply to this email.",
+      ].join("\n"),
+    });
+  } catch (error) {
+    console.error("Bid review: failed to send customer confirmation email.", error);
   }
 
   return Response.json({ ok: true });

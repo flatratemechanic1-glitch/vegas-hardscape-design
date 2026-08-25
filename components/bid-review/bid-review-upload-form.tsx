@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   BID_REVIEW_ALLOWED_MIME_TYPES,
+  BID_REVIEW_GUARANTEE_DISPLAY,
+  BID_REVIEW_TURNAROUND_DISPLAY,
   HONEYPOT_FIELD_NAME,
   MAX_BID_FILE_BYTES,
 } from "@/lib/constants";
@@ -146,8 +148,9 @@ export function BidReviewUploadForm({
           <div className="flex flex-col items-center gap-2 py-16 text-center">
             <h2 className="font-heading text-2xl text-foreground">Thank you</h2>
             <p className="max-w-sm text-sm text-muted-foreground">
-              We&apos;ve received your bid and payment. We&apos;ll send your
-              written review to your email shortly.
+              We&apos;ve received your bid and payment, and sent a
+              confirmation to your email. Your written review will follow
+              within {BID_REVIEW_TURNAROUND_DISPLAY}. {BID_REVIEW_GUARANTEE_DISPLAY}
             </p>
           </div>
         ) : (
