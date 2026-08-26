@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils";
 import { TURF_CALCULATOR_FAQS } from "@/lib/tool-faqs";
 
 export const metadata: Metadata = {
-  title: "Free Artificial Turf Calculator for Las Vegas Yards",
+  title: "Free Artificial Turf Calculator",
   description:
-    "Estimate how much artificial turf, infill, and seaming material your Las Vegas yard needs — plus illustrative water savings from converting grass to turf. A free planning calculator from Vegas Hardscape Design.",
+    "Estimate how much artificial turf, infill, and seaming material your yard needs — plus illustrative water savings from converting grass to turf. A free planning calculator from Vegas Hardscape Design.",
   alternates: {
     canonical: "/tools/turf-calculator",
   },
@@ -26,12 +26,12 @@ export default function TurfCalculatorPage() {
             Free Tool
           </p>
           <h1 className="mt-4 font-heading text-4xl text-foreground sm:text-5xl">
-            Las Vegas Artificial Turf Calculator
+            Artificial Turf Calculator
           </h1>
           <p className="mt-6 text-sm text-muted-foreground sm:text-base">
             Enter your yard dimensions to estimate turf, infill, and seaming
             materials for a grass-to-turf conversion — plus a rough sense of
-            the water savings, a real consideration in our desert climate.
+            the water savings, a real consideration in dry climates.
           </p>
         </div>
       </section>

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SERVICE_AREAS } from "@/lib/constants";
+import { BID_REVIEW_VERTICALS } from "@/lib/bid-review-verticals";
 import { SITE_URL } from "@/lib/site-config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -24,7 +25,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact",
   ];
   const areaRoutes = SERVICE_AREAS.map((area) => `/service-areas/${area.slug}`);
-  const routes = [...staticRoutes, ...areaRoutes];
+  const bidReviewVerticalRoutes = BID_REVIEW_VERTICALS.map(
+    (vertical) => `/bid-review/${vertical.slug}`
+  );
+  const routes = [...staticRoutes, ...areaRoutes, ...bidReviewVerticalRoutes];
 
   return routes.map((route) => ({
     url: `${SITE_URL}${route}`,

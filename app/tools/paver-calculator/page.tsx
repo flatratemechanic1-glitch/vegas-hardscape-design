@@ -9,7 +9,7 @@ import { PAVER_CALCULATOR_FAQS } from "@/lib/tool-faqs";
 export const metadata: Metadata = {
   title: "Free Paver Calculator",
   description:
-    "Estimate how many pavers, how much base gravel, and how much bedding sand your Las Vegas patio or walkway needs — a free planning calculator from Vegas Hardscape Design.",
+    "Estimate how many pavers, how much base gravel, and how much bedding sand your patio or walkway needs — a free planning calculator from Vegas Hardscape Design.",
   alternates: {
     canonical: "/tools/paver-calculator",
   },

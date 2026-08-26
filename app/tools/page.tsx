@@ -5,6 +5,7 @@ import {
   Calculator,
   ClipboardCheck,
   Droplet,
+  FileSearch,
   Flame,
   FlaskConical,
   Leaf,
@@ -23,7 +24,7 @@ import {
 export const metadata: Metadata = {
   title: "Free Landscape Tools",
   description:
-    "Free planning calculators for Las Vegas hardscape and landscape projects, from Vegas Hardscape Design.",
+    "Free planning calculators for hardscape and landscape projects — pavers, turf, concrete, retaining walls, and pools. Use them anywhere, then get your contractor's bid reviewed.",
   alternates: {
     canonical: "/tools",
   },
@@ -107,10 +108,22 @@ export default function ToolsPage() {
             Free Landscape Planning Tools
           </h1>
           <p className="mt-6 text-sm text-muted-foreground sm:text-base">
-            Quick, free calculators to help you plan a Las Vegas hardscape
-            or landscape project before you talk to a contractor.
+            Quick, free calculators to help you plan a hardscape or
+            landscape project before you talk to a contractor — wherever
+            you&apos;re building.
           </p>
         </div>
+      </section>
+
+      <section className="border-b border-border bg-secondary/30">
+        <Link
+          href="/bid-review"
+          className="mx-auto flex max-w-4xl items-center justify-center gap-3 px-6 py-4 text-center text-sm text-foreground/80 transition-colors hover:text-accent lg:px-10"
+        >
+          <FileSearch className="size-4 shrink-0 text-accent" strokeWidth={1.5} />
+          Already have a bid in hand? Get it reviewed before you sign
+          <span aria-hidden="true">&rarr;</span>
+        </Link>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-24 lg:px-10">
