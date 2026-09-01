@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SERVICE_AREAS } from "@/lib/constants";
 import { BID_REVIEW_VERTICALS } from "@/lib/bid-review-verticals";
+import { getAllGuides } from "@/lib/guides";
 import { SITE_URL } from "@/lib/site-config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -21,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/backyard-prep-kit",
     "/plants",
     "/bid-review",
+    "/guides",
     "/about",
     "/contact",
   ];
@@ -28,7 +30,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const bidReviewVerticalRoutes = BID_REVIEW_VERTICALS.map(
     (vertical) => `/bid-review/${vertical.slug}`
   );
-  const routes = [...staticRoutes, ...areaRoutes, ...bidReviewVerticalRoutes];
+  const guideRoutes = getAllGuides().map((guide) => `/guides/${guide.slug}`);
+  const routes = [...staticRoutes, ...areaRoutes, ...bidReviewVerticalRoutes, ...guideRoutes];
 
   return routes.map((route) => ({
     url: `${SITE_URL}${route}`,

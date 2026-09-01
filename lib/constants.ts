@@ -139,6 +139,7 @@ export const NAV_LINKS: readonly NavItem[] = [
       { href: "/3d-preview", label: "3D Preview" },
       { href: "/tools", label: "Free Tools" },
       { href: "/plants", label: "Desert Plants" },
+      { href: "/guides", label: "Guides" },
     ],
   },
   { href: "/bid-review", label: "Bid Review" },
